@@ -69,9 +69,10 @@ const Home = () => {
                 THREE,
                 color: isDark ? 0x3b82f6 : 0x3b82f6,
                 backgroundColor: isDark ? 0x0f172a : 0xefefef,
-                points: 20.00,
-                maxDistance: 20.00,
-                spacing: 18.00,
+                points: isDark? 10.00 : 20,
+                maxDistance: isDark ? 30.00: 20.00,
+                spacing: isDark ? 25.00 : 18.00,
+                vertexColors: isDark ? true : false,
                 showDots: true
             });
         }
@@ -101,7 +102,7 @@ const Home = () => {
             {/* Vanta Background */}
             <div ref={bgRef} className="fixed inset-0" />
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-8 md:my-0">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-24 md:my-0">
 
                 {/* Resume Card (Left) */}
                 <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-blue-900/40 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
@@ -118,30 +119,28 @@ const Home = () => {
                             <img
                                 src={`data:image/jpeg;base64,${aboutData.avatar_image}`}
                                 alt="Avatar"
-                                className="w-24 h-24 rounded-full object-cover border-4 border-white/30 shadow-xl"
+                                className="w-48 h-48 rounded-full object-cover border-4 border-white/30 shadow-xl"
                             />
                         </div>
                     )}
 
                     {/* Name & Occupation */}
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-2">
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-400 mb-2">
                         {aboutData?.name || 'Your Name'}
                     </h2>
-                    <p className="text-lg text-blue-600 dark:text-blue-400 mb-6 font-medium">
+                    <p className="text-lg text-blue-900 dark:text-slate-400 mb-6 font-medium">
                         {aboutData?.occupation || 'Your Occupation'}
                     </p>
 
                     {/* Title & Description */}
-                    <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent text-center">
-                        {aboutData?.title || 'About Me'}
-                    </h1>
+
                     <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 text-center max-w-lg leading-relaxed mb-6">
                         {aboutData?.description || 'Passionate developer crafting digital experiences.'}
                     </p>
 
                     {/* Technology Carousel */}
                     {technologies.length > 0 && (
-                        <div className="w-full max-w-md mb-6">
+                        <div className="w-full max-w-xs mb-6">
                             <h3 className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-400 text-center mb-4 font-semibold">
                                 Tech Stack
                             </h3>
