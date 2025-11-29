@@ -1,9 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import * as THREE from 'three';
 import NET from 'vanta/dist/vanta.net.min';
 import { useTheme } from '../context/ThemeContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import axios from 'axios';
+import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
 
 const Home = () => {
     const containerRef = useRef(null);
@@ -15,6 +21,25 @@ const Home = () => {
     const { theme } = useTheme();
     const bgRef = useRef(null);
 
+    const [aboutData, setAboutData] = useState(null);
+    const [technologies, setTechnologies] = useState([]);
+
+    // Fetch About data and Technologies
+    useEffect(() => {
+        const fetchAboutData = async () => {
+            try {
+                const aboutRes = await axios.get('http://localhost:8000/about/');
+                setAboutData(aboutRes.data);
+
+                const techRes = await axios.get('http://localhost:8000/about/technologies');
+                setTechnologies(techRes.data);
+            } catch (error) {
+                console.error('Error fetching about data:', error);
+            }
+        };
+        fetchAboutData();
+    }, []);
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from([resumeRef.current, aboutRef.current, calendarRef.current], {
@@ -23,7 +48,7 @@ const Home = () => {
                 duration: 1,
                 stagger: 0.2,
                 ease: "power3.out",
-                clearProps: "all" // Ensure no residual transforms affect layout
+                clearProps: "all"
             });
         }, containerRef);
 
@@ -33,7 +58,6 @@ const Home = () => {
     // Initialize Vanta NET effect with Theme Support
     useEffect(() => {
         if (bgRef.current) {
-            // Destroy previous instance if it exists
             if (vantaRef.current) {
                 vantaRef.current.destroy();
             }
@@ -43,8 +67,8 @@ const Home = () => {
             vantaRef.current = NET({
                 el: bgRef.current,
                 THREE,
-                color: isDark ? 0x3b82f6 : 0x3b82f6, // Blue points in both for contrast, or adjust
-                backgroundColor: isDark ? 0x0f172a : 0xefefef, // Slate-900 vs Light Gray
+                color: isDark ? 0x3b82f6 : 0x3b82f6,
+                backgroundColor: isDark ? 0x0f172a : 0xefefef,
                 points: 20.00,
                 maxDistance: 20.00,
                 spacing: 18.00,
@@ -58,7 +82,19 @@ const Home = () => {
                 vantaRef.current = null;
             }
         };
-    }, [theme]); // Re-run when theme changes
+    }, [theme]);
+
+    const getSocialIcon = (platform) => {
+        const icons = {
+            github: Github,
+            linkedin: Linkedin,
+            twitter: Twitter,
+            email: Mail,
+        };
+        return icons[platform.toLowerCase()] || Mail;
+    };
+
+    const socialLinks = aboutData?.social_links ? JSON.parse(aboutData.social_links) : {};
 
     return (
         <div ref={containerRef} className="min-h-screen w-full flex flex-col items-center justify-center relative p-4 md:p-8 overflow-y-auto">
@@ -75,16 +111,102 @@ const Home = () => {
                 </Link>
 
                 {/* About Card (Center - Larger with Glass Effect) */}
-                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[550px] md:h-full bg-blue-900/40 dark:bg-slate-800/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent text-center">About Me</h1>
-                    <p className="text-base md:text-xl text-slate-700 dark:text-slate-300 text-center max-w-lg leading-relaxed">
-                        Passionate Fullstack Developer crafting digital experiences with code and creativity.
-                    </p>
-                    <div className="mt-8">
-                        {/* Content loaded from API later */}
-                    </div>
+                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[650px] md:h-full bg-blue-900/40 dark:bg-slate-800/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
+                    {/* Avatar */}
+                    {aboutData?.avatar_image && (
+                        <div className="mb-4">
+                            <img
+                                src={`data:image/jpeg;base64,${aboutData.avatar_image}`}
+                                alt="Avatar"
+                                className="w-24 h-24 rounded-full object-cover border-4 border-white/30 shadow-xl"
+                            />
+                        </div>
+                    )}
 
-                    {/* Link to Showcasing at bottom of About/Home */}
+                    {/* Name & Occupation */}
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-2">
+                        {aboutData?.name || 'Your Name'}
+                    </h2>
+                    <p className="text-lg text-blue-600 dark:text-blue-400 mb-6 font-medium">
+                        {aboutData?.occupation || 'Your Occupation'}
+                    </p>
+
+                    {/* Title & Description */}
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent text-center">
+                        {aboutData?.title || 'About Me'}
+                    </h1>
+                    <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 text-center max-w-lg leading-relaxed mb-6">
+                        {aboutData?.description || 'Passionate developer crafting digital experiences.'}
+                    </p>
+
+                    {/* Technology Carousel */}
+                    {technologies.length > 0 && (
+                        <div className="w-full max-w-md mb-6">
+                            <h3 className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-400 text-center mb-4 font-semibold">
+                                Tech Stack
+                            </h3>
+                            <Swiper
+                                effect={'coverflow'}
+                                grabCursor={true}
+                                centeredSlides={true}
+                                slidesPerView={'auto'}
+                                coverflowEffect={{
+                                    rotate: 50,
+                                    stretch: 0,
+                                    depth: 100,
+                                    modifier: 1,
+                                    slideShadows: true,
+                                }}
+                                autoplay={{
+                                    delay: 2500,
+                                    disableOnInteraction: false,
+                                }}
+                                loop={technologies.length >= 3}
+                                modules={[EffectCoverflow, Autoplay]}
+                                className="tech-swiper"
+                            >
+                                {technologies.map((tech) => (
+                                    <SwiperSlide key={tech.id} className="!w-24 !h-24">
+                                        <div className="w-full h-full bg-white/20 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center p-3 border border-white/20">
+                                            {tech.image && (
+                                                <img
+                                                    src={`data:image/png;base64,${tech.image}`}
+                                                    alt={tech.title}
+                                                    className="w-12 h-12 object-contain mb-2"
+                                                />
+                                            )}
+                                            <span className="text-xs font-medium text-slate-800 dark:text-white text-center">
+                                                {tech.title}
+                                            </span>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
+                    )}
+
+                    {/* Social Links */}
+                    {Object.keys(socialLinks).length > 0 && (
+                        <div className="flex gap-4 mb-6">
+                            {Object.entries(socialLinks).map(([platform, url]) => {
+                                const Icon = getSocialIcon(platform);
+                                return (
+                                    <a
+                                        key={platform}
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-2 bg-white/20 dark:bg-slate-700/30 backdrop-blur-sm rounded-lg hover:bg-white/30 dark:hover:bg-slate-600/40 transition-all hover:scale-110"
+                                        title={platform}
+                                    >
+                                        <Icon size={20} className="text-slate-700 dark:text-slate-300" />
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {/* Link to Showcasing at bottom */}
                     <Link to="/showcasing" className="absolute bottom-8 text-sm uppercase tracking-widest text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-semibold">
                         View Showcasing →
                     </Link>

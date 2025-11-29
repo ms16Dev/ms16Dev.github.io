@@ -1,5 +1,6 @@
 from typing import Optional, List
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Column
+from sqlalchemy import LargeBinary
 from datetime import date, datetime
 
 class About(SQLModel, table=True):
@@ -8,13 +9,13 @@ class About(SQLModel, table=True):
     occupation: str = Field(default="Full Stack Developer")
     title: str
     description: str
-    avatar_image: Optional[bytes] = Field(default=None) # BLOB
+    avatar_image: Optional[bytes] = Field(default=None, sa_column=Column(LargeBinary(length=(2**32)-1)))
     social_links: str = Field(default="[]") # JSON string of links
 
 class Technology(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
-    image: bytes # BLOB
+    image: bytes = Field(sa_column=Column(LargeBinary(length=(2**32)-1)))
 
 class Project(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
