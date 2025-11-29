@@ -22,10 +22,10 @@ const Navbar = () => {
     return (
         <nav className="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-8">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md border border-white/20 dark:border-slate-700/50 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg">
+                <div className="bg-blue-900/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/20 dark:border-slate-700/50 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg">
 
                     {/* Title */}
-                    <Link to="/" className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+                    <Link to="/" className="text-xl font-bold text-white hover:opacity-80 transition-opacity">
                         Welcome to my space
                     </Link>
 

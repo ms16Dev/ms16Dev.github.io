@@ -63,19 +63,19 @@ const Home = () => {
     return (
         <div ref={containerRef} className="min-h-screen w-full flex flex-col items-center justify-center relative p-4 md:p-8 overflow-y-auto">
             {/* Vanta Background */}
-            <div ref={bgRef} className="fixed inset-0 -z-10" />
+            <div ref={bgRef} className="fixed inset-0" />
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-8 md:my-0">
 
                 {/* Resume Card (Left) */}
-                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
+                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-blue-900/40 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Resume</h2>
                     </div>
                 </Link>
 
                 {/* About Card (Center - Larger with Glass Effect) */}
-                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[550px] md:h-full bg-white/20 dark:bg-slate-800/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
+                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[550px] md:h-full bg-blue-900/40 dark:bg-slate-800/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent text-center">About Me</h1>
                     <p className="text-base md:text-xl text-slate-700 dark:text-slate-300 text-center max-w-lg leading-relaxed">
                         Passionate Fullstack Developer crafting digital experiences with code and creativity.
@@ -91,7 +91,7 @@ const Home = () => {
                 </div>
 
                 {/* Calendar Card (Right) */}
-                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-white/10 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
+                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-blue-900/40 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Calendar</h2>
                     </div>
