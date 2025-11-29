@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { User, Folder, Calendar, FileText, Settings } from 'lucide-react';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('about');
@@ -132,174 +133,245 @@ const Admin = () => {
         }
     };
 
+    const tabs = [
+        { id: 'about', label: 'About', icon: <User size={18} /> },
+        { id: 'projects', label: 'Projects', icon: <Folder size={18} /> },
+        { id: 'calendar', label: 'Calendar', icon: <Calendar size={18} /> },
+        { id: 'resume', label: 'Resume', icon: <FileText size={18} /> },
+        { id: 'settings', label: 'Settings', icon: <Settings size={18} /> },
+    ];
+
     return (
-        <div className="min-h-screen bg-slate-900 text-white pt-24 pb-8 px-8">
-            <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+        <div className="min-h-screen w-full flex flex-col items-center pt-24 pb-8 px-4 md:px-8 overflow-y-auto relative">
+            {/* Vanta Background (Optional: reusing Home's style if desired, or just keeping theme bg) */}
+            {/* For now, keeping consistent simple background but allowing for glassmorphism on top */}
 
-            <div className="flex gap-4 mb-8 border-b border-slate-700 pb-4">
-                {['about', 'projects', 'calendar', 'resume', 'settings'].map(tab => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2 rounded-lg capitalize ${activeTab === tab ? 'bg-accent text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
+            <div className="w-full max-w-4xl">
+                <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                    Admin Dashboard
+                </h1>
 
-            <div className="bg-slate-800 p-8 rounded-2xl max-w-2xl">
-                {activeTab === 'about' && (
-                    <form onSubmit={handleSaveAbout} className="space-y-4">
-                        <h2 className="text-xl font-bold mb-4">Edit About Section</h2>
-                        <div>
-                            <label className="block text-sm mb-1">Title</label>
-                            <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={aboutData.title} onChange={e => setAboutData({ ...aboutData, title: e.target.value })} />
-                        </div>
-                        <div>
-                            <label className="block text-sm mb-1">Description</label>
-                            <textarea className="w-full bg-slate-900 border border-slate-700 rounded p-2 h-32" value={aboutData.description} onChange={e => setAboutData({ ...aboutData, description: e.target.value })} />
-                        </div>
-                        <button type="submit" className="bg-green-600 px-6 py-2 rounded hover:bg-green-500">Save</button>
-                    </form>
-                )}
+                {/* Mobile-Aware Scrollable Tabs */}
+                <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide snap-x">
+                    {tabs.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 whitespace-nowrap snap-start ${activeTab === tab.id
+                                ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                : 'bg-white/10 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-white/20 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-white backdrop-blur-sm border border-white/10'
+                                }`}
+                        >
+                            {tab.icon}
+                            <span className="font-medium">{tab.label}</span>
+                        </button>
+                    ))}
+                </div>
 
-                {activeTab === 'settings' && (
-                    <form onSubmit={handleSaveSettings} className="space-y-4">
-                        <h2 className="text-xl font-bold mb-4">Calendar Settings</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm mb-1">Start Year</label>
-                                <input type="number" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={settingsData.calendar_start_year} onChange={e => setSettingsData({ ...settingsData, calendar_start_year: parseInt(e.target.value) })} />
-                            </div>
-                            <div>
-                                <label className="block text-sm mb-1">End Year</label>
-                                <input type="number" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={settingsData.calendar_end_year} onChange={e => setSettingsData({ ...settingsData, calendar_end_year: parseInt(e.target.value) })} />
-                            </div>
-                        </div>
-                        <button type="submit" className="bg-blue-600 px-6 py-2 rounded hover:bg-blue-500">Save Settings</button>
-                    </form>
-                )}
+                {/* Glassmorphic Content Container */}
+                <div className="bg-white/20 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 p-6 md:p-8 rounded-3xl shadow-2xl transition-all duration-300">
 
-                {activeTab === 'projects' && (
-                    <div className="space-y-8">
-                        <form onSubmit={handleCreateProject} className="space-y-4 border-b border-slate-700 pb-8">
-                            <h2 className="text-xl font-bold mb-4">{projectData.id ? 'Edit Project' : 'Add New Project'}</h2>
+                    {activeTab === 'about' && (
+                        <form onSubmit={handleSaveAbout} className="space-y-6 animate-fadeIn">
+                            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                <User className="text-blue-500" /> Edit About Section
+                            </h2>
                             <div>
-                                <label className="block text-sm mb-1">Title</label>
-                                <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.title} onChange={e => setProjectData({ ...projectData, title: e.target.value })} />
-                            </div>
-                            <div>
-                                <label className="block text-sm mb-1">Start Date</label>
-                                <input type="date" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.start_date} onChange={e => setProjectData({ ...projectData, start_date: e.target.value })} />
-                            </div>
-                            <div>
-                                <label className="block text-sm mb-1">End Date</label>
-                                <input type="date" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.end_date} onChange={e => setProjectData({ ...projectData, end_date: e.target.value })} />
+                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
+                                <input
+                                    type="text"
+                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                    value={aboutData.title}
+                                    onChange={e => setAboutData({ ...aboutData, title: e.target.value })}
+                                />
                             </div>
                             <div>
-                                <label className="block text-sm mb-1">Description</label>
-                                <textarea className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.description} onChange={e => setProjectData({ ...projectData, description: e.target.value })} />
+                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
+                                <textarea
+                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-40 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
+                                    value={aboutData.description}
+                                    onChange={e => setAboutData({ ...aboutData, description: e.target.value })}
+                                />
                             </div>
-                            <div>
-                                <label className="block text-sm mb-1">Tags (comma separated)</label>
-                                <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.tags} onChange={e => setProjectData({ ...projectData, tags: e.target.value })} />
-                            </div>
-                            <div>
-                                <label className="block text-sm mb-1">Image URL</label>
-                                <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={projectData.background_image_url} onChange={e => setProjectData({ ...projectData, background_image_url: e.target.value })} />
-                            </div>
-                            <div className="flex gap-2">
-                                <button type="submit" className="bg-blue-600 px-6 py-2 rounded hover:bg-blue-500">{projectData.id ? 'Update Project' : 'Create Project'}</button>
-                                {projectData.id && (
-                                    <button type="button" onClick={() => setProjectData({ title: '', start_date: '', end_date: '', description: '', tags: '', background_image_url: '' })} className="bg-slate-600 px-6 py-2 rounded hover:bg-slate-500">Cancel</button>
-                                )}
-                            </div>
+                            <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all">
+                                Save Changes
+                            </button>
                         </form>
+                    )}
 
-                        <div>
-                            <h3 className="text-lg font-bold mb-4">Existing Projects</h3>
-                            <div className="space-y-4">
-                                {projectsList.map(project => (
-                                    <div key={project.id} className="bg-slate-900 p-4 rounded border border-slate-700 flex justify-between items-center">
-                                        <div>
-                                            <h4 className="font-bold">{project.title}</h4>
-                                            <p className="text-sm text-slate-400">{project.start_date} - {project.end_date}</p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <button onClick={() => setProjectData(project)} className="text-blue-400 hover:text-blue-300">Edit</button>
-                                            <button onClick={() => handleDeleteProject(project.id)} className="text-red-400 hover:text-red-300">Delete</button>
-                                        </div>
+                    {activeTab === 'settings' && (
+                        <form onSubmit={handleSaveSettings} className="space-y-6 animate-fadeIn">
+                            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                <Settings className="text-blue-500" /> Calendar Settings
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Year</label>
+                                    <input
+                                        type="number"
+                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                        value={settingsData.calendar_start_year}
+                                        onChange={e => setSettingsData({ ...settingsData, calendar_start_year: parseInt(e.target.value) })}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Year</label>
+                                    <input
+                                        type="number"
+                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                        value={settingsData.calendar_end_year}
+                                        onChange={e => setSettingsData({ ...settingsData, calendar_end_year: parseInt(e.target.value) })}
+                                    />
+                                </div>
+                            </div>
+                            <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all">
+                                Save Settings
+                            </button>
+                        </form>
+                    )}
+
+                    {activeTab === 'projects' && (
+                        <div className="space-y-8 animate-fadeIn">
+                            <form onSubmit={handleCreateProject} className="space-y-6 border-b border-slate-200 dark:border-slate-700 pb-8">
+                                <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                    <Folder className="text-blue-500" /> {projectData.id ? 'Edit Project' : 'Add New Project'}
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.title} onChange={e => setProjectData({ ...projectData, title: e.target.value })} />
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {activeTab === 'calendar' && (
-                    <div className="space-y-8">
-                        <form onSubmit={handleCreateEvent} className="space-y-4 border-b border-slate-700 pb-8">
-                            <h2 className="text-xl font-bold mb-4">{calendarData.id ? 'Edit Event' : 'Add Calendar Event'}</h2>
-                            <div>
-                                <label className="block text-sm mb-1">Title</label>
-                                <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={calendarData.title} onChange={e => setCalendarData({ ...calendarData, title: e.target.value })} />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm mb-1">Start Date</label>
-                                    <input type="date" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={calendarData.start_date} onChange={e => setCalendarData({ ...calendarData, start_date: e.target.value })} />
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Date</label>
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.start_date} onChange={e => setProjectData({ ...projectData, start_date: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Date</label>
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.end_date} onChange={e => setProjectData({ ...projectData, end_date: e.target.value })} />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
+                                        <textarea className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none" value={projectData.description} onChange={e => setProjectData({ ...projectData, description: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Tags</label>
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.tags} onChange={e => setProjectData({ ...projectData, tags: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Image URL</label>
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.background_image_url} onChange={e => setProjectData({ ...projectData, background_image_url: e.target.value })} />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-sm mb-1">End Date</label>
-                                    <input type="date" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={calendarData.end_date} onChange={e => setCalendarData({ ...calendarData, end_date: e.target.value })} />
+                                <div className="flex gap-4">
+                                    <button type="submit" className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all">
+                                        {projectData.id ? 'Update Project' : 'Create Project'}
+                                    </button>
+                                    {projectData.id && (
+                                        <button type="button" onClick={() => setProjectData({ title: '', start_date: '', end_date: '', description: '', tags: '', background_image_url: '' })} className="px-6 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-white/10 dark:hover:bg-slate-700/50 transition-all">
+                                            Cancel
+                                        </button>
+                                    )}
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm mb-1">Icon (Emoji)</label>
-                                <input type="text" className="w-full bg-slate-900 border border-slate-700 rounded p-2" value={calendarData.icon} onChange={e => setCalendarData({ ...calendarData, icon: e.target.value })} />
-                            </div>
-                            <div className="flex gap-2">
-                                <button type="submit" className="bg-purple-600 px-6 py-2 rounded hover:bg-purple-500">{calendarData.id ? 'Update Event' : 'Create Event'}</button>
-                                {calendarData.id && (
-                                    <button type="button" onClick={() => setCalendarData({ title: '', start_date: '', end_date: '', icon: '' })} className="bg-slate-600 px-6 py-2 rounded hover:bg-slate-500">Cancel</button>
-                                )}
-                            </div>
-                        </form>
+                            </form>
 
-                        <div>
-                            <h3 className="text-lg font-bold mb-4">Existing Events</h3>
-                            <div className="space-y-4">
-                                {eventsList.map(event => (
-                                    <div key={event.id} className="bg-slate-900 p-4 rounded border border-slate-700 flex justify-between items-center">
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-2xl">{event.icon}</span>
+                            <div>
+                                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white">Existing Projects</h3>
+                                <div className="grid gap-4">
+                                    {projectsList.map(project => (
+                                        <div key={project.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex justify-between items-center hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors">
                                             <div>
-                                                <h4 className="font-bold">{event.title}</h4>
-                                                <p className="text-sm text-slate-400">{event.start_date} - {event.end_date}</p>
+                                                <h4 className="font-bold text-slate-800 dark:text-white">{project.title}</h4>
+                                                <p className="text-sm text-slate-500 dark:text-slate-400">{project.start_date} - {project.end_date}</p>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <button onClick={() => setProjectData(project)} className="text-blue-500 hover:text-blue-600 font-medium">Edit</button>
+                                                <button onClick={() => handleDeleteProject(project.id)} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2">
-                                            <button onClick={() => setCalendarData(event)} className="text-blue-400 hover:text-blue-300">Edit</button>
-                                            <button onClick={() => handleDeleteEvent(event.id)} className="text-red-400 hover:text-red-300">Delete</button>
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {activeTab === 'resume' && (
-                    <form onSubmit={handleSaveResume} className="space-y-4">
-                        <h2 className="text-xl font-bold mb-4">Edit Resume (JSON)</h2>
-                        <div>
-                            <label className="block text-sm mb-1">Content (JSON)</label>
-                            <textarea className="w-full bg-slate-900 border border-slate-700 rounded p-2 h-96 font-mono text-xs" value={resumeData} onChange={e => setResumeData(e.target.value)} />
+                    {activeTab === 'calendar' && (
+                        <div className="space-y-8 animate-fadeIn">
+                            <form onSubmit={handleCreateEvent} className="space-y-6 border-b border-slate-200 dark:border-slate-700 pb-8">
+                                <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                    <Calendar className="text-blue-500" /> {calendarData.id ? 'Edit Event' : 'Add Calendar Event'}
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.title} onChange={e => setCalendarData({ ...calendarData, title: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Date</label>
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.start_date} onChange={e => setCalendarData({ ...calendarData, start_date: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Date</label>
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.end_date} onChange={e => setCalendarData({ ...calendarData, end_date: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Icon (Emoji)</label>
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.icon} onChange={e => setCalendarData({ ...calendarData, icon: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div className="flex gap-4">
+                                    <button type="submit" className="flex-1 bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-purple-500/25 hover:scale-105 transition-all">
+                                        {calendarData.id ? 'Update Event' : 'Create Event'}
+                                    </button>
+                                    {calendarData.id && (
+                                        <button type="button" onClick={() => setCalendarData({ title: '', start_date: '', end_date: '', icon: '' })} className="px-6 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-white/10 dark:hover:bg-slate-700/50 transition-all">
+                                            Cancel
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
+
+                            <div>
+                                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white">Existing Events</h3>
+                                <div className="grid gap-4">
+                                    {eventsList.map(event => (
+                                        <div key={event.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex justify-between items-center hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors">
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-3xl bg-white/50 dark:bg-slate-700/50 p-2 rounded-lg">{event.icon}</span>
+                                                <div>
+                                                    <h4 className="font-bold text-slate-800 dark:text-white">{event.title}</h4>
+                                                    <p className="text-sm text-slate-500 dark:text-slate-400">{event.start_date} - {event.end_date}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <button onClick={() => setCalendarData(event)} className="text-blue-500 hover:text-blue-600 font-medium">Edit</button>
+                                                <button onClick={() => handleDeleteEvent(event.id)} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" className="bg-orange-600 px-6 py-2 rounded hover:bg-orange-500">Save Resume</button>
-                    </form>
-                )}
+                    )}
+
+                    {activeTab === 'resume' && (
+                        <form onSubmit={handleSaveResume} className="space-y-6 animate-fadeIn">
+                            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                <FileText className="text-blue-500" /> Edit Resume (JSON)
+                            </h2>
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Content (JSON)</label>
+                                <textarea
+                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 h-96 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                    value={resumeData}
+                                    onChange={e => setResumeData(e.target.value)}
+                                />
+                            </div>
+                            <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-orange-500 to-amber-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-orange-500/25 hover:scale-105 transition-all">
+                                Save Resume
+                            </button>
+                        </form>
+                    )}
+                </div>
             </div>
         </div>
     );
