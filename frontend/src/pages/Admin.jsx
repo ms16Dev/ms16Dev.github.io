@@ -4,7 +4,9 @@ import { User, Folder, Calendar, FileText, Settings } from 'lucide-react';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('about');
-    const [aboutData, setAboutData] = useState({ title: '', description: '', image_url: '' });
+    const [aboutData, setAboutData] = useState({ name: '', occupation: '', title: '', description: '', social_links: '[]', avatar_image: null });
+    const [avatarFile, setAvatarFile] = useState(null);
+
     const [projectData, setProjectData] = useState({ title: '', start_date: '', end_date: '', description: '', tags: '', background_image_url: '' });
     const [calendarData, setCalendarData] = useState({ title: '', start_date: '', end_date: '', icon: '' });
     const [resumeData, setResumeData] = useState('');
@@ -12,6 +14,10 @@ const Admin = () => {
 
     const [projectsList, setProjectsList] = useState([]);
     const [eventsList, setEventsList] = useState([]);
+
+    // Technology State
+    const [technologies, setTechnologies] = useState([]);
+    const [newTech, setNewTech] = useState({ title: '', image: null });
 
     // Fetch initial data
     const fetchData = async () => {
@@ -30,6 +36,9 @@ const Admin = () => {
 
             const settingsRes = await axios.get('http://localhost:8000/settings/');
             if (settingsRes.data) setSettingsData(settingsRes.data);
+
+            const techRes = await axios.get('http://localhost:8000/about/technologies');
+            setTechnologies(techRes.data);
         } catch (error) {
             console.error("Error fetching data", error);
         }
@@ -42,12 +51,59 @@ const Admin = () => {
     const handleSaveAbout = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8000/about/', aboutData);
+            const formData = new FormData();
+            formData.append('name', aboutData.name);
+            formData.append('occupation', aboutData.occupation);
+            formData.append('title', aboutData.title);
+            formData.append('description', aboutData.description);
+            formData.append('social_links', aboutData.social_links);
+            if (avatarFile) {
+                formData.append('avatar', avatarFile);
+            }
+
+            await axios.post('http://localhost:8000/about/', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
             alert('About section updated!');
             fetchData();
         } catch (error) {
             console.error(error);
             alert('Failed to update About');
+        }
+    };
+
+    const handleAddTechnology = async (e) => {
+        e.preventDefault();
+        if (!newTech.title || !newTech.image) {
+            alert("Please provide both title and image.");
+            return;
+        }
+        try {
+            const formData = new FormData();
+            formData.append('title', newTech.title);
+            formData.append('image', newTech.image);
+
+            await axios.post('http://localhost:8000/about/technologies', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            setNewTech({ title: '', image: null });
+            // Reset file input manually if needed
+            document.getElementById('tech-image-input').value = "";
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            alert('Failed to add technology');
+        }
+    };
+
+    const handleDeleteTechnology = async (id) => {
+        if (!window.confirm("Delete this technology?")) return;
+        try {
+            await axios.delete(`http://localhost:8000/about/technologies/${id}`);
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            alert('Failed to delete technology');
         }
     };
 
@@ -172,31 +228,128 @@ const Admin = () => {
                 <div className="bg-white/20 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 p-6 md:p-8 rounded-3xl shadow-2xl transition-all duration-300">
 
                     {activeTab === 'about' && (
-                        <form onSubmit={handleSaveAbout} className="space-y-6 animate-fadeIn">
-                            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
-                                <User className="text-blue-500" /> Edit About Section
-                            </h2>
-                            <div>
-                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
-                                <input
-                                    type="text"
-                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
-                                    value={aboutData.title}
-                                    onChange={e => setAboutData({ ...aboutData, title: e.target.value })}
-                                />
+                        <div className="space-y-8 animate-fadeIn">
+                            <form onSubmit={handleSaveAbout} className="space-y-6">
+                                <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+                                    <User className="text-blue-500" /> Edit About Section
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Name</label>
+                                        <input
+                                            type="text"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            value={aboutData.name}
+                                            onChange={e => setAboutData({ ...aboutData, name: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Occupation</label>
+                                        <input
+                                            type="text"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            value={aboutData.occupation}
+                                            onChange={e => setAboutData({ ...aboutData, occupation: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
+                                        <input
+                                            type="text"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            value={aboutData.title}
+                                            onChange={e => setAboutData({ ...aboutData, title: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
+                                        <textarea
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
+                                            value={aboutData.description}
+                                            onChange={e => setAboutData({ ...aboutData, description: e.target.value })}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Avatar Image</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            onChange={e => setAvatarFile(e.target.files[0])}
+                                        />
+                                        {aboutData.avatar_image && (
+                                            <div className="mt-2">
+                                                <p className="text-xs text-slate-500 mb-1">Current Avatar:</p>
+                                                <img src={`data:image/jpeg;base64,${aboutData.avatar_image}`} alt="Current Avatar" className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Social Links (JSON)</label>
+                                        <textarea
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
+                                            value={aboutData.social_links}
+                                            onChange={e => setAboutData({ ...aboutData, social_links: e.target.value })}
+                                            placeholder='{"github": "...", "linkedin": "..."}'
+                                        />
+                                    </div>
+                                </div>
+                                <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all">
+                                    Save Changes
+                                </button>
+                            </form>
+
+                            {/* Technology Management Section */}
+                            <div className="border-t border-slate-200 dark:border-slate-700 pt-8">
+                                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white">Technology Experience</h3>
+
+                                <form onSubmit={handleAddTechnology} className="mb-8 bg-white/30 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                                    <h4 className="text-lg font-semibold mb-4 text-slate-700 dark:text-slate-300">Add New Technology</h4>
+                                    <div className="flex flex-col md:flex-row gap-4 items-end">
+                                        <div className="flex-1 w-full">
+                                            <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Tech Name</label>
+                                            <input
+                                                type="text"
+                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                                value={newTech.title}
+                                                onChange={e => setNewTech({ ...newTech, title: e.target.value })}
+                                                placeholder="e.g. React"
+                                            />
+                                        </div>
+                                        <div className="flex-1 w-full">
+                                            <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Icon/Image</label>
+                                            <input
+                                                id="tech-image-input"
+                                                type="file"
+                                                accept="image/*"
+                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                                onChange={e => setNewTech({ ...newTech, image: e.target.files[0] })}
+                                            />
+                                        </div>
+                                        <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-all">
+                                            Add
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    {technologies.map(tech => (
+                                        <div key={tech.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center gap-3 hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors relative group">
+                                            {tech.image && (
+                                                <img src={`data:image/jpeg;base64,${tech.image}`} alt={tech.title} className="w-12 h-12 object-contain" />
+                                            )}
+                                            <span className="font-medium text-slate-800 dark:text-white">{tech.title}</span>
+                                            <button
+                                                onClick={() => handleDeleteTechnology(tech.id)}
+                                                className="absolute top-2 right-2 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-700 bg-white dark:bg-slate-900 rounded-full p-1"
+                                            >
+                                                <Settings size={14} className="rotate-45" /> {/* Using Settings as X icon for now or import X */}
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
-                                <textarea
-                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-40 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
-                                    value={aboutData.description}
-                                    onChange={e => setAboutData({ ...aboutData, description: e.target.value })}
-                                />
-                            </div>
-                            <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all">
-                                Save Changes
-                            </button>
-                        </form>
+                        </div>
                     )}
 
                     {activeTab === 'settings' && (

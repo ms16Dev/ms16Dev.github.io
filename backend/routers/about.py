@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlmodel import Session, select
 from ..database import engine
-from ..models import About
+from ..models import About, Technology
+import base64
+import json
 
 router = APIRouter(prefix="/about", tags=["about"])
 
@@ -9,26 +11,90 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-@router.get("/", response_model=About)
+@router.get("/")
 def get_about(session: Session = Depends(get_session)):
     about = session.exec(select(About)).first()
     if not about:
-        return About(title="Welcome", description="Please configure the about section.")
-    return about
+        return {
+            "name": "My Name",
+            "occupation": "Developer",
+            "title": "Welcome",
+            "description": "Please configure.",
+            "avatar_image": None,
+            "social_links": "[]"
+        }
+    
+    # Convert bytes to base64 string for frontend
+    about_dict = about.model_dump()
+    if about.avatar_image:
+        about_dict["avatar_image"] = base64.b64encode(about.avatar_image).decode('utf-8')
+    
+    return about_dict
 
-@router.post("/", response_model=About)
-def create_or_update_about(about: About, session: Session = Depends(get_session)):
+@router.post("/")
+def update_about(
+    name: str = Form(...),
+    occupation: str = Form(...),
+    title: str = Form(...),
+    description: str = Form(...),
+    social_links: str = Form(...),
+    avatar: UploadFile = File(None),
+    session: Session = Depends(get_session)
+):
     existing_about = session.exec(select(About)).first()
-    if existing_about:
-        existing_about.title = about.title
-        existing_about.description = about.description
-        existing_about.image_url = about.image_url
-        session.add(existing_about)
-        session.commit()
-        session.refresh(existing_about)
-        return existing_about
+    if not existing_about:
+        existing_about = About(
+            name=name, occupation=occupation, title=title, 
+            description=description, social_links=social_links
+        )
     else:
-        session.add(about)
-        session.commit()
-        session.refresh(about)
-        return about
+        existing_about.name = name
+        existing_about.occupation = occupation
+        existing_about.title = title
+        existing_about.description = description
+        existing_about.social_links = social_links
+    
+    if avatar:
+        existing_about.avatar_image = avatar.file.read()
+    
+    session.add(existing_about)
+    session.commit()
+    session.refresh(existing_about)
+    
+    # Return with base64 for immediate UI update if needed
+    result = existing_about.model_dump()
+    if existing_about.avatar_image:
+        result["avatar_image"] = base64.b64encode(existing_about.avatar_image).decode('utf-8')
+    return result
+
+# Technology Endpoints
+@router.get("/technologies")
+def get_technologies(session: Session = Depends(get_session)):
+    techs = session.exec(select(Technology)).all()
+    result = []
+    for tech in techs:
+        tech_dict = tech.model_dump()
+        if tech.image:
+            tech_dict["image"] = base64.b64encode(tech.image).decode('utf-8')
+        result.append(tech_dict)
+    return result
+
+@router.post("/technologies")
+def add_technology(
+    title: str = Form(...),
+    image: UploadFile = File(...),
+    session: Session = Depends(get_session)
+):
+    tech = Technology(title=title, image=image.file.read())
+    session.add(tech)
+    session.commit()
+    return {"status": "success"}
+
+@router.delete("/technologies/{tech_id}")
+def delete_technology(tech_id: int, session: Session = Depends(get_session)):
+    tech = session.get(Technology, tech_id)
+    if not tech:
+        raise HTTPException(status_code=404, detail="Technology not found")
+    session.delete(tech)
+    session.commit()
+    return {"status": "success"}

@@ -4,9 +4,17 @@ from datetime import date, datetime
 
 class About(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    name: str = Field(default="My Name")
+    occupation: str = Field(default="Full Stack Developer")
     title: str
     description: str
-    image_url: Optional[str] = None
+    avatar_image: Optional[bytes] = Field(default=None) # BLOB
+    social_links: str = Field(default="[]") # JSON string of links
+
+class Technology(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    title: str
+    image: bytes # BLOB
 
 class Project(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
