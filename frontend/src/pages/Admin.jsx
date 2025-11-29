@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { User, Folder, Calendar, FileText, Settings } from 'lucide-react';
+import ResumeForm from '../components/ResumeForm';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('about');
@@ -9,7 +10,7 @@ const Admin = () => {
 
     const [projectData, setProjectData] = useState({ title: '', start_date: '', end_date: '', description: '', tags: '', background_image_url: '' });
     const [calendarData, setCalendarData] = useState({ title: '', start_date: '', end_date: '', icon: '' });
-    const [resumeData, setResumeData] = useState('');
+    const [resumeData, setResumeData] = useState(null);
     const [settingsData, setSettingsData] = useState({ calendar_start_year: 2020, calendar_end_year: 2030 });
 
     const [projectsList, setProjectsList] = useState([]);
@@ -26,7 +27,13 @@ const Admin = () => {
             if (aboutRes.data) setAboutData(aboutRes.data);
 
             const resumeRes = await axios.get('http://localhost:8000/resume/');
-            if (resumeRes.data) setResumeData(JSON.stringify(resumeRes.data, null, 2));
+            if (resumeRes.data && resumeRes.data.content) {
+                try {
+                    setResumeData(JSON.parse(resumeRes.data.content));
+                } catch {
+                    setResumeData(null);
+                }
+            }
 
             const projectsRes = await axios.get('http://localhost:8000/projects/');
             setProjectsList(projectsRes.data);
@@ -177,15 +184,14 @@ const Admin = () => {
         }
     };
 
-    const handleSaveResume = async (e) => {
-        e.preventDefault();
+    const handleSaveResume = async (formData) => {
         try {
-            const parsedResumeData = JSON.parse(resumeData);
-            await axios.post('http://localhost:8000/resume/', parsedResumeData);
-            alert('Resume updated!');
+            await axios.post('http://localhost:8000/resume/', { content: JSON.stringify(formData) });
+            alert('Resume updated successfully!');
+            fetchData();
         } catch (error) {
             console.error(error);
-            alert('Failed to update resume. Please check JSON format.');
+            alert('Failed to update resume.');
         }
     };
 
@@ -507,22 +513,12 @@ const Admin = () => {
                     )}
 
                     {activeTab === 'resume' && (
-                        <form onSubmit={handleSaveResume} className="space-y-6 animate-fadeIn">
+                        <div className="animate-fadeIn">
                             <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
-                                <FileText className="text-blue-500" /> Edit Resume (JSON)
+                                <FileText className="text-blue-500" /> Edit Resume
                             </h2>
-                            <div>
-                                <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Content (JSON)</label>
-                                <textarea
-                                    className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 h-96 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
-                                    value={resumeData}
-                                    onChange={e => setResumeData(e.target.value)}
-                                />
-                            </div>
-                            <button type="submit" className="w-full md:w-auto bg-gradient-to-r from-orange-500 to-amber-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-orange-500/25 hover:scale-105 transition-all">
-                                Save Resume
-                            </button>
-                        </form>
+                            <ResumeForm resumeData={resumeData} onSave={handleSaveResume} />
+                        </div>
                     )}
                 </div>
             </div>

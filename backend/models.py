@@ -1,6 +1,6 @@
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Column
-from sqlalchemy import LargeBinary
+from sqlalchemy import LargeBinary, Text
 from datetime import date, datetime
 
 class About(SQLModel, table=True):
@@ -36,8 +36,7 @@ class CalendarEvent(SQLModel, table=True):
 
 class Resume(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    title: str
-    file_path: str
+    content: str = Field(default="{}", sa_column=Column(Text(length=2**31-1))) # LONGTEXT for large JSON
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Settings(SQLModel, table=True):
