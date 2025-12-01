@@ -174,7 +174,7 @@ const ResumeForm = ({ resumeData, onSave }) => {
         onSave(formData);
     };
 
-    const inputClass = "w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm";
+    const inputClass = "w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm";
     const labelClass = "block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300";
     const sectionClass = "mb-8 p-6 bg-white/30 dark:bg-slate-800/30 rounded-2xl border border-slate-200 dark:border-slate-700";
 

@@ -244,7 +244,7 @@ const Admin = () => {
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Name</label>
                                         <input
                                             type="text"
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                             value={aboutData.name}
                                             onChange={e => setAboutData({ ...aboutData, name: e.target.value })}
                                         />
@@ -253,7 +253,7 @@ const Admin = () => {
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Occupation</label>
                                         <input
                                             type="text"
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                             value={aboutData.occupation}
                                             onChange={e => setAboutData({ ...aboutData, occupation: e.target.value })}
                                         />
@@ -262,7 +262,7 @@ const Admin = () => {
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
                                         <input
                                             type="text"
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                             value={aboutData.title}
                                             onChange={e => setAboutData({ ...aboutData, title: e.target.value })}
                                         />
@@ -270,7 +270,7 @@ const Admin = () => {
                                     <div className="md:col-span-2">
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
                                         <textarea
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
                                             value={aboutData.description}
                                             onChange={e => setAboutData({ ...aboutData, description: e.target.value })}
                                         />
@@ -280,7 +280,7 @@ const Admin = () => {
                                         <input
                                             type="file"
                                             accept="image/*"
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                             onChange={e => setAvatarFile(e.target.files[0])}
                                         />
                                         {aboutData.avatar_image && (
@@ -293,7 +293,7 @@ const Admin = () => {
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Social Links (JSON)</label>
                                         <textarea
-                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
+                                            className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white h-32 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none"
                                             value={aboutData.social_links}
                                             onChange={e => setAboutData({ ...aboutData, social_links: e.target.value })}
                                             placeholder='{"github": "...", "linkedin": "..."}'
@@ -316,7 +316,7 @@ const Admin = () => {
                                             <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Tech Name</label>
                                             <input
                                                 type="text"
-                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                                 value={newTech.title}
                                                 onChange={e => setNewTech({ ...newTech, title: e.target.value })}
                                                 placeholder="e.g. React"
@@ -328,7 +328,7 @@ const Admin = () => {
                                                 id="tech-image-input"
                                                 type="file"
                                                 accept="image/*"
-                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                                className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                                 onChange={e => setNewTech({ ...newTech, image: e.target.files[0] })}
                                             />
                                         </div>
@@ -368,7 +368,7 @@ const Admin = () => {
                                     <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Year</label>
                                     <input
                                         type="number"
-                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                         value={settingsData.calendar_start_year}
                                         onChange={e => setSettingsData({ ...settingsData, calendar_start_year: parseInt(e.target.value) })}
                                     />
@@ -377,7 +377,7 @@ const Admin = () => {
                                     <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Year</label>
                                     <input
                                         type="number"
-                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
+                                        className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm"
                                         value={settingsData.calendar_end_year}
                                         onChange={e => setSettingsData({ ...settingsData, calendar_end_year: parseInt(e.target.value) })}
                                     />
@@ -398,27 +398,27 @@ const Admin = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
-                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.title} onChange={e => setProjectData({ ...projectData, title: e.target.value })} />
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.title} onChange={e => setProjectData({ ...projectData, title: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Date</label>
-                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.start_date} onChange={e => setProjectData({ ...projectData, start_date: e.target.value })} />
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.start_date} onChange={e => setProjectData({ ...projectData, start_date: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Date</label>
-                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.end_date} onChange={e => setProjectData({ ...projectData, end_date: e.target.value })} />
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.end_date} onChange={e => setProjectData({ ...projectData, end_date: e.target.value })} />
                                     </div>
                                     <div className="md:col-span-2">
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Description</label>
-                                        <textarea className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none" value={projectData.description} onChange={e => setProjectData({ ...projectData, description: e.target.value })} />
+                                        <textarea className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white h-32 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm resize-none" value={projectData.description} onChange={e => setProjectData({ ...projectData, description: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Tags</label>
-                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.tags} onChange={e => setProjectData({ ...projectData, tags: e.target.value })} />
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.tags} onChange={e => setProjectData({ ...projectData, tags: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Image URL</label>
-                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.background_image_url} onChange={e => setProjectData({ ...projectData, background_image_url: e.target.value })} />
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={projectData.background_image_url} onChange={e => setProjectData({ ...projectData, background_image_url: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
@@ -462,19 +462,19 @@ const Admin = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Title</label>
-                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.title} onChange={e => setCalendarData({ ...calendarData, title: e.target.value })} />
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.title} onChange={e => setCalendarData({ ...calendarData, title: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Start Date</label>
-                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.start_date} onChange={e => setCalendarData({ ...calendarData, start_date: e.target.value })} />
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.start_date} onChange={e => setCalendarData({ ...calendarData, start_date: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">End Date</label>
-                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.end_date} onChange={e => setCalendarData({ ...calendarData, end_date: e.target.value })} />
+                                        <input type="date" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.end_date} onChange={e => setCalendarData({ ...calendarData, end_date: e.target.value })} />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">Icon (Emoji)</label>
-                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.icon} onChange={e => setCalendarData({ ...calendarData, icon: e.target.value })} />
+                                        <input type="text" className="w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm" value={calendarData.icon} onChange={e => setCalendarData({ ...calendarData, icon: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
