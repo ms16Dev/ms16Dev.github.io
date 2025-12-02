@@ -67,14 +67,37 @@ const Home = () => {
             vantaRef.current = NET({
                 el: bgRef.current,
                 THREE,
-                color: isDark ? 0x3b82f6 : 0x3b82f6,
-                backgroundColor: isDark ? 0x0f172a : 0xefefef,
+                color: isDark ? 0xe0ffff : 0xffb86a,
+                backgroundColor: isDark ? 0x0f172a : 0xfffbeb,
                 points: isDark? 10.00 : 20,
                 maxDistance: isDark ? 30.00: 20.00,
                 spacing: isDark ? 25.00 : 18.00,
-                vertexColors: isDark ? true : false,
                 showDots: true
             });
+
+                            
+                // ⬇️ Add this block here
+                setTimeout(() => {
+                    const effect = vantaRef.current;
+                    if (!effect) return;
+
+                    const lineHex = isDark ? 0x002e63 : 0xffd6a7;
+                    const scene = effect.scene || effect._scene;
+
+                    scene?.traverse((obj) => {
+                        if (obj.type === "LineSegments" && obj.material) {
+                            if (obj.material.color) {
+                                obj.material.color.setHex(lineHex);
+                                obj.material.needsUpdate = true;
+                            }
+                            if (obj.material.uniforms) {
+                                Object.values(obj.material.uniforms).forEach((u) => {
+                                    if (u?.value?.setHex) u.value.setHex(lineHex);
+                                });
+                            }
+                        }
+                    });
+                }, 150);
         }
 
         return () => {
@@ -105,14 +128,14 @@ const Home = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-24 md:my-0">
 
                 {/* Resume Card (Left) */}
-                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-blue-900/40 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
+                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-stone-500/40 dark:bg-blue-900/40 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Resume</h2>
                     </div>
                 </Link>
 
                 {/* About Card (Center - Larger with Glass Effect) */}
-                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[650px] md:h-full bg-blue-900/40 dark:bg-slate-800/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
+                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[650px] md:h-full bg-stone-500/40 dark:bg-blue-900/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
                     {/* Avatar */}
                     {aboutData?.avatar_image && (
                         <div className="mb-4">
@@ -212,7 +235,7 @@ const Home = () => {
                 </div>
 
                 {/* Calendar Card (Right) */}
-                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-blue-900/40 dark:bg-slate-800/30 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
+                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-stone-500/40 dark:bg-blue-900/40  backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Calendar</h2>
                     </div>

@@ -18,7 +18,7 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="p-3 rounded-full bg-secondary/80 backdrop-blur-sm border transition-colors shadow-lg z-50"
+            className="p-3 rounded-full bg-stone-500/40 dark:bg-secondary/80 hover:bg-stone-500/80 dark:hover:bg-slate-500/80 backdrop-blur-sm border transition-colors shadow-lg z-50"
             aria-label="Toggle Theme"
         >
             <div ref={iconRef}>
