@@ -128,14 +128,14 @@ const Home = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-24 md:my-0">
 
                 {/* Resume Card (Left) */}
-                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-stone-500/40 dark:bg-blue-900/40 backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
+                <Link to="/resume" ref={resumeRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-glass backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-2 md:order-1">
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Resume</h2>
+                        <h2 className="text-2xl font-bold text-primary group-hover:text-secondary transition-colors">Resume</h2>
                     </div>
                 </Link>
 
                 {/* About Card (Center - Larger with Glass Effect) */}
-                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[650px] md:h-full bg-stone-500/40 dark:bg-blue-900/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
+                <div ref={aboutRef} className="relative w-full md:w-3/5 h-[650px] md:h-full bg-glass dark:bg-blue-900/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 order-1 md:order-2">
                     {/* Avatar */}
                     {aboutData?.avatar_image && (
                         <div className="mb-4">
@@ -148,23 +148,23 @@ const Home = () => {
                     )}
 
                     {/* Name & Occupation */}
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-400 mb-2">
+                    <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-2">
                         {aboutData?.name || 'Your Name'}
                     </h2>
-                    <p className="text-lg text-blue-900 dark:text-slate-400 mb-6 font-medium">
+                    <p className="text-lg text-accent mb-6 font-medium">
                         {aboutData?.occupation || 'Your Occupation'}
                     </p>
 
                     {/* Title & Description */}
 
-                    <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 text-center max-w-lg leading-relaxed mb-6">
+                    <p className="text-base md:text-lg text-primary text-center max-w-lg leading-relaxed mb-6">
                         {aboutData?.description || 'Passionate developer crafting digital experiences.'}
                     </p>
 
                     {/* Technology Carousel */}
                     {technologies.length > 0 && (
                         <div className="w-full max-w-xs mb-6">
-                            <h3 className="text-sm uppercase tracking-wider text-slate-600 dark:text-slate-400 text-center mb-4 font-semibold">
+                            <h3 className="text-sm uppercase tracking-wider text-primary text-center mb-4 font-semibold">
                                 Tech Stack
                             </h3>
                             <Swiper
@@ -189,7 +189,7 @@ const Home = () => {
                             >
                                 {technologies.map((tech) => (
                                     <SwiperSlide key={tech.id} className="!w-24 !h-24">
-                                        <div className="w-full h-full bg-white/20 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center p-3 border border-white/20">
+                                        <div className="w-full h-full rounded-xl flex flex-col items-center justify-center p-3 border border-white/20">
                                             {tech.image && (
                                                 <img
                                                     src={`data:image/png;base64,${tech.image}`}
@@ -197,7 +197,7 @@ const Home = () => {
                                                     className="w-12 h-12 object-contain mb-2"
                                                 />
                                             )}
-                                            <span className="text-xs font-medium text-slate-800 dark:text-white text-center">
+                                            <span className="text-xs font-medium text-accent text-center">
                                                 {tech.title}
                                             </span>
                                         </div>
@@ -218,10 +218,10 @@ const Home = () => {
                                         href={url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2 bg-white/20 dark:bg-slate-700/30 backdrop-blur-sm rounded-lg hover:bg-white/30 dark:hover:bg-slate-600/40 transition-all hover:scale-110"
+                                        className="p-2 bg-surface/20 rounded-lg hover:bg-white/30 dark:hover:bg-slate-600/40 transition-all hover:scale-110"
                                         title={platform}
                                     >
-                                        <Icon size={20} className="text-slate-700 dark:text-slate-300" />
+                                        <Icon size={20} className="text-secondary" />
                                     </a>
                                 );
                             })}
@@ -229,15 +229,15 @@ const Home = () => {
                     )}
 
                     {/* Link to Showcasing at bottom */}
-                    <Link to="/showcasing" className="absolute bottom-8 text-sm uppercase tracking-widest text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-semibold">
+                    <Link to="/showcasing" className="absolute bottom-8 text-sm uppercase tracking-widest text-primary  transition-colors font-semibold">
                         View Showcasing →
                     </Link>
                 </div>
 
                 {/* Calendar Card (Right) */}
-                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-stone-500/40 dark:bg-blue-900/40  backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
+                <Link to="/calendar" ref={calendarRef} className="group relative w-full md:w-1/5 h-48 md:h-3/5 bg-glass backdrop-blur-md rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 order-3 md:order-3">
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-300 group-hover:text-accent transition-colors">Calendar</h2>
+                        <h2 className="text-2xl font-bold text-primary group-hover:text-secondary transition-colors">Calendar</h2>
                     </div>
                 </Link>
 
