@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import gsap from 'gsap';
 import Draggable from 'gsap/Draggable';
-import { useTheme } from '../context/ThemeContext';
 
 gsap.registerPlugin(Draggable);
 
@@ -19,7 +18,6 @@ const Calendar = () => {
     const scrollbarRef = useRef(null);
     const proxyRef = useRef(document.createElement("div"));
 
-    const { theme } = useTheme();
 
     // Fetch data
     useEffect(() => {
@@ -177,11 +175,11 @@ const Calendar = () => {
     };
 
     return (
-        <div ref={containerRef} className="h-screen w-full bg-primary text-primary overflow-hidden relative font-sans transition-colors duration-300">
+        <div ref={containerRef} className="h-screen w-full bg-surface text-primary overflow-hidden relative font-sans transition-colors duration-300">
 
             {/* Year Counter (Fixed Background) */}
             <div className="absolute top-24 left-10 z-0 pointer-events-none">
-                <h1 className="text-[15vw] font-bold text-slate-200 dark:text-slate-800/50 leading-none tracking-tighter transition-all duration-300">
+                <h1 className="text-[15vw] font-bold text-primary/30 leading-none tracking-tighter transition-all duration-300">
                     {currentYear}
                 </h1>
             </div>
@@ -192,10 +190,10 @@ const Calendar = () => {
                 {Array.from({ length: totalYears }).map((_, yearIdx) => {
                     const year = startYear + yearIdx;
                     return (
-                        <div key={year} className="h-full border-l border-slate-200 dark:border-slate-800 relative transition-colors duration-300" style={{ width: YEAR_WIDTH }}>
-                            <div className="absolute top-4 left-4 text-2xl font-bold text-slate-400 dark:text-slate-600">{year}</div>
+                        <div key={year} className="h-full border-l border-secondary/30 relative transition-colors duration-300" style={{ width: YEAR_WIDTH }}>
+                            <div className="absolute top-4 left-4 text-2xl font-bold text-primary">{year}</div>
                             {/* Months */}
-                            <div className="absolute bottom-32 left-0 w-full flex justify-between px-4 text-slate-400 dark:text-slate-500 text-sm uppercase tracking-widest">
+                            <div className="absolute bottom-32 left-0 w-full flex justify-between px-4  text-secondary text-sm uppercase tracking-widest">
                                 {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
                                     <span key={m}>{m}</span>
                                 ))}
@@ -222,18 +220,18 @@ const Calendar = () => {
 
             {/* Custom Scrollbar & Knob */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-16 z-20 flex items-center gap-4">
-                <span className="text-slate-400 dark:text-slate-500 font-mono">{startYear}</span>
+                <span className="text-secondary font-mono">{startYear}</span>
 
-                <div ref={scrollbarRef} className="flex-1 h-2 bg-slate-200 dark:bg-slate-800 rounded-full relative transition-colors duration-300">
+                <div ref={scrollbarRef} className="flex-1 h-2 bg-accent rounded-full relative transition-colors duration-300">
                     <div
                         ref={knobRef}
-                        className="absolute top-1/2 -translate-y-1/2 w-12 h-12 bg-accent rounded-full shadow-[0_0_20px_rgba(var(--accent),0.5)] cursor-grab active:cursor-grabbing flex items-center justify-center border-4 border-white dark:border-slate-900 transition-colors duration-300"
+                        className="absolute top-1/2 -translate-y-1/2 w-12 h-12 bg-primary rounded-lg shadow-[0_0_20px_rgba(var(--accent),0.5)] cursor-grab active:cursor-grabbing flex items-center justify-center border-2 border-surface transition-colors duration-300"
                     >
-                        <div className="w-2 h-2 bg-white rounded-full" />
+                        <div className="w-4 h-4 bg-accent rounded-full" />
                     </div>
                 </div>
 
-                <span className="text-slate-400 dark:text-slate-500 font-mono">{endYear}</span>
+                <span className="text-secondary font-mono">{endYear}</span>
             </div>
         </div>
     );
