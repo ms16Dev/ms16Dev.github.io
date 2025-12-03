@@ -174,15 +174,15 @@ const ResumeForm = ({ resumeData, onSave }) => {
         onSave(formData);
     };
 
-    const inputClass = "w-full bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all backdrop-blur-sm";
-    const labelClass = "block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300";
+    const inputClass = "w-full bg-surface border border-accent rounded-xl p-3 text-muted focus:outline-none focus:ring-2 focus:ring-accent transition-all backdrop-blur-sm";
+    const labelClass = "block text-sm font-medium mb-2 text-accent";
     const sectionClass = "mb-8 p-6 bg-white/30 dark:bg-slate-800/30 rounded-2xl border border-slate-200 dark:border-slate-700";
 
     return (
         <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information */}
             <div className={sectionClass}>
-                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white">Personal Information</h3>
+                <h3 className="text-xl font-bold mb-6 text-primary">Personal Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label className={labelClass}>Full Name *</label>
@@ -246,11 +246,11 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Work Experience */}
             <div className={sectionClass}>
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Work Experience</h3>
+                    <h3 className="text-xl font-bold text-primary">Work Experience</h3>
                     <button
                         type="button"
                         onClick={addExperience}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all"
+                        className="flex items-center gap-2 bg-secondary dark:bg-accent text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
                     >
                         <Plus size={18} /> Add Experience
                     </button>
@@ -308,7 +308,7 @@ const ResumeForm = ({ resumeData, onSave }) => {
                                 <button
                                     type="button"
                                     onClick={() => addAchievement(index)}
-                                    className="text-blue-600 hover:text-blue-700 text-sm"
+                                    className="text-accent hover:text-accent/80 text-sm"
                                 >
                                     + Add Achievement
                                 </button>
@@ -339,11 +339,11 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Education */}
             <div className={sectionClass}>
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Education</h3>
+                    <h3 className="text-xl font-bold text-primary">Education</h3>
                     <button
                         type="button"
                         onClick={addEducation}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all"
+                        className="flex items-center gap-2 bg-secondary dark:bg-accent text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
                     >
                         <Plus size={18} /> Add Education
                     </button>
@@ -410,11 +410,11 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Skills */}
             <div className={sectionClass}>
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Skills</h3>
+                    <h3 className="text-xl font-bold text-primary">Skills</h3>
                     <button
                         type="button"
                         onClick={addSkill}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all"
+                        className="flex items-center gap-2 bg-secondary dark:bg-accent text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
                     >
                         <Plus size={18} /> Add Skill Category
                     </button>
@@ -457,11 +457,11 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Languages */}
             <div className={sectionClass}>
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Languages</h3>
+                    <h3 className="text-xl font-bold text-primary">Languages</h3>
                     <button
                         type="button"
                         onClick={addLanguage}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all"
+                        className="flex items-center gap-2 bg-secondary dark:bg-accent text-white px-4 py-2 rounded-xl shadow-lg  hover:shadow-accent/25 hover:scale-105 transition-all"
                     >
                         <Plus size={18} /> Add Language
                     </button>
@@ -509,11 +509,11 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Certifications */}
             <div className={sectionClass}>
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Certifications (Optional)</h3>
+                    <h3 className="text-xl font-bold text-primary">Certifications (Optional)</h3>
                     <button
                         type="button"
                         onClick={addCertification}
-                        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition-all"
+                        className="flex items-center gap-2 bg-secondary dark:bg-accent text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
                     >
                         <Plus size={18} /> Add Certification
                     </button>
@@ -573,7 +573,7 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Submit Button */}
             <button
                 type="submit"
-                className="w-full md:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-green-500/25 hover:scale-105 transition-all"
+                className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
             >
                 Save Resume
             </button>
