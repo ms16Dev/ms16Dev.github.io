@@ -19,6 +19,7 @@ const HomeResumeCard = () => {
             });
 
             gsap.to(".resume-paper", {
+                scale: 1.2,
                 y: -5,
                 rotate: 2,
                 duration: 4,
@@ -46,7 +47,7 @@ const HomeResumeCard = () => {
 
                 {/* Header Skeleton */}
                 <div className="flex gap-2 items-center mb-2">
-                    <div className="w-8 h-8 rounded-full bg-secondary/30" />
+                    <div className="w-8 h-4  rounded-full bg-secondary/30" />
                     <div className="flex flex-col gap-1">
                         <div className="skeleton-line w-12 h-2 bg-primary/40 rounded-full" />
                         <div className="skeleton-line w-8 h-1.5 bg-primary/20 rounded-full" />
@@ -55,16 +56,15 @@ const HomeResumeCard = () => {
 
                 {/* Body Text Skeletons */}
                 <div className="space-y-1.5 opacity-80">
-                    <div className="skeleton-line w-full h-1.5 bg-white/20 rounded-full origin-left" />
-                    <div className="skeleton-line w-3/4 h-1.5 bg-white/20 rounded-full origin-left" />
-                    <div className="skeleton-line w-5/6 h-1.5 bg-white/20 rounded-full origin-left" />
+                    <div className="skeleton-line w-full h-1.5 bg-primary rounded-full origin-left" />
+                    <div className="skeleton-line w-3/4 h-1.5 bg-primary rounded-full origin-left" />
+                    <div className="skeleton-line w-5/6 h-1.5 bg-primary rounded-full origin-left" />
                 </div>
 
                 {/* Block 2 */}
                 <div className="mt-2 space-y-1.5 opacity-80">
                     <div className="w-1/3 h-2 bg-accent/30 rounded-full mb-1" />
-                    <div className="skeleton-line w-full h-1.5 bg-white/20 rounded-full origin-left" />
-                    <div className="skeleton-line w-2/3 h-1.5 bg-white/20 rounded-full origin-left" />
+                    <div className="skeleton-line w-full h-1.5 bg-primary rounded-full origin-left" />
                 </div>
 
             </div>

@@ -49,7 +49,7 @@ const HomeCalendarCard = () => {
             <h2 className="absolute top-4 text-sm font-bold text-secondary/80 uppercase tracking-widest z-10">Calendar</h2>
 
             {/* Calendar Visual */}
-            <div className="relative w-20 h-24 mb-6 perspective-1000">
+            <div className="relative w-26 h-30 mb-6 perspective-1000">
                 {/* Back Page (Static) */}
                 <div className="absolute inset-0 bg-surface border border-white/20 rounded-lg shadow-lg flex flex-col p-2">
                     <div className="h-4 bg-primary/20 w-full rounded-sm mb-2" />
@@ -82,10 +82,10 @@ const HomeCalendarCard = () => {
             </div>
 
             {/* Timeline Visual */}
-            <div className="absolute bottom-6 w-3/4 h-1 bg-white/10 rounded-full overflow-hidden flex items-center px-0">
-                <div className="timeline-dot w-2 h-2 bg-accent rounded-full absolute left-4" />
-                <div className="timeline-dot w-2 h-2 bg-secondary rounded-full absolute left-8 opacity-60" />
-                <div className="timeline-dot w-1 h-1 bg-primary rounded-full absolute left-0 opacity-40" />
+            <div className="w-3/4 h-1 bg-white/10 rounded-full overflow-hidden flex items-center px-0">
+                <div className="timeline-dot w-2 h-2 bg-accent rounded-full absolute left-8" />
+                <div className="timeline-dot w-2 h-2 bg-secondary rounded-full absolute left-12 opacity-60" />
+                <div className="timeline-dot w-1 h-1 bg-primary rounded-full absolute left-8 opacity-40" />
             </div>
 
         </Link>

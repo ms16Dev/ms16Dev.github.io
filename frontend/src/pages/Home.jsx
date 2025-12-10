@@ -38,9 +38,8 @@ const Home = () => {
         const ctx = gsap.context(() => {
             gsap.from(".home-card-wrapper", {
                 y: 100,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
+                duration: 3,
+                stagger: 0,
                 ease: "power3.out",
                 clearProps: "all"
             });

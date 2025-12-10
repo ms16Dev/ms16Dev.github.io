@@ -114,7 +114,7 @@ const HomeAboutCard = ({ aboutData, technologies }) => {
             )}
 
             {/* Link to Showcasing at bottom */}
-            <Link to="/showcasing" className="absolute bottom-8 text-sm uppercase tracking-widest text-primary  transition-colors font-semibold">
+            <Link to="/showcasing" className="absolute bottom-6 text-sm uppercase tracking-widest text-primary  transition-colors hover:text-primary/80 font-semibold">
                 View Showcasing →
             </Link>
         </div>
