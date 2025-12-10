@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Settings } from 'lucide-react';
+import { User, Trash2 } from 'lucide-react';
 import { useAbout } from '../hooks/useAbout';
 
 const AdminAbout = () => {
@@ -124,7 +124,7 @@ const AdminAbout = () => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="w-full md:w-auto bg-secondary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-secondary/25 hover:scale-105 transition-all">
+                <button type="submit" className="w-full md:w-auto bg-secondary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                     Save Changes
                 </button>
             </form>
@@ -155,7 +155,7 @@ const AdminAbout = () => {
                                 onChange={e => setNewTech({ ...newTech, image: e.target.files[0] })}
                             />
                         </div>
-                        <button type="submit" className="bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-secondary/25 transition-all">
+                        <button type="submit" className="bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                             Add
                         </button>
                     </div>
@@ -172,7 +172,7 @@ const AdminAbout = () => {
                                 onClick={() => deleteTechnology(tech.id)}
                                 className="absolute top-2 right-2 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-700 bg-white dark:bg-slate-900 rounded-full p-1"
                             >
-                                <Settings size={14} className="rotate-45" />
+                                <Trash2 size={14} />
                             </button>
                         </div>
                     ))}

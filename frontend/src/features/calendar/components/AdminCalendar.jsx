@@ -55,7 +55,7 @@ const AdminCalendar = () => {
                     </div>
                 </div>
                 <div className="flex gap-4">
-                    <button type="submit" className="flex-1 bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-secondary/25 hover:scale-105 transition-all">
+                    <button type="submit" className="flex-1 bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                         {calendarData.id ? 'Update Event' : 'Create Event'}
                     </button>
                     {calendarData.id && (
@@ -79,7 +79,7 @@ const AdminCalendar = () => {
                                 </div>
                             </div>
                             <div className="flex gap-3">
-                                <button onClick={() => handleEdit(event)} className="text-secondary hover:text-secondary/80 font-medium">Edit</button>
+                                <button onClick={() => handleEdit(event)} className="text-accent hover:text-accent/80 font-medium">Edit</button>
                                 <button onClick={() => deleteEvent(event.id)} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
                             </div>
                         </div>

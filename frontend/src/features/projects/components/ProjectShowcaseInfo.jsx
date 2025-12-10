@@ -1,6 +1,7 @@
 import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import { getEventColor } from '../../../utils/colors';
+import { formatDateRange } from '../../../utils/dateUtils';
 
 const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
     if (!project) return null;
@@ -8,8 +9,8 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
     return (
         <div className="space-y-8 w-full max-w-full overflow-hidden">
             <div ref={titleRef} className="w-full">
-                <div className="inline-block px-3 py-1 md:px-4 md:py-1 border border-accent/50 rounded-full text-accent text-xs md:text-sm font-mono mb-3 md:mb-4 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                    {project.start_date} — {project.end_date || 'Present'}
+                <div className="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-accent text-white text-xs md:text-sm font-mono mb-3 md:mb-4 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                    {formatDateRange(project.start_date, project.end_date)}
                 </div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight break-words overflow-wrap-anywhere">
                     {project.title}
@@ -42,7 +43,7 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
                     </div>
                 )}
 
-                {/* Tags */}
+                {/* Tags 
                 {project.tags && (
                     <div className="flex flex-wrap gap-2 w-full">
                         {project.tags.split(',').map(tag => tag.trim()).filter(Boolean).map((tag, i) => (
@@ -55,6 +56,7 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
                         ))}
                     </div>
                 )}
+                    */}
 
                 {/* Buttons */}
                 <div className="flex items-center gap-4 mt-8 pt-4">
