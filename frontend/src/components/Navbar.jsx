@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Calendar, FileText, LayoutGrid, Settings, Menu, X, Home } from 'lucide-react';
+import { Calendar, FileText, LayoutGrid, Settings, Menu, X, Home, LogOut } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import { useAuth } from '../features/auth/context/AuthContext';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
+    const { isAuthenticated, logout } = useAuth();
 
     const links = [
         { name: 'Home', path: '/', icon: <Home size={20} /> },
@@ -46,6 +48,16 @@ const Navbar = () => {
 
                     <div className="flex items-center gap-4">
                         <ThemeToggle />
+                        {isAuthenticated() && (
+                            <button
+                                onClick={logout}
+                                className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-all duration-300 group"
+                                title="Logout"
+                            >
+                                <LogOut size={20} className="group-hover:scale-110 transition-transform duration-300" />
+                                <span className="font-medium">Logout</span>
+                            </button>
+                        )}
                         {/* Mobile Toggle */}
                         <button onClick={toggleMenu} className="md:hidden text-secondary p-2 hover:bg-white/10 rounded-lg transition-colors">
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -71,6 +83,18 @@ const Navbar = () => {
                                     <span className="font-medium">{link.name}</span>
                                 </Link>
                             ))}
+                            {isAuthenticated() && (
+                                <button
+                                    onClick={() => {
+                                        logout();
+                                        setIsOpen(false);
+                                    }}
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors"
+                                >
+                                    <LogOut size={20} />
+                                    <span className="font-medium">Logout</span>
+                                </button>
+                            )}
                         </div>
                     </div>
                 )}

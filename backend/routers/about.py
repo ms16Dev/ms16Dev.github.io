@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlmodel import Session, select
 from ..database import engine
-from ..models import About, Technology
+from ..models import About, Technology, Admin
+from ..auth import get_current_admin
 import base64
 import json
 
-router = APIRouter(prefix="/about", tags=["about"])
+router = APIRouter(prefix="/api/v1/about", tags=["about"])
 
 def get_session():
     with Session(engine) as session:
@@ -39,7 +40,8 @@ def update_about(
     description: str = Form(...),
     social_links: str = Form(...),
     avatar: UploadFile = File(None),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
 ):
     existing_about = session.exec(select(About)).first()
     if not existing_about:
@@ -83,7 +85,8 @@ def get_technologies(session: Session = Depends(get_session)):
 def add_technology(
     title: str = Form(...),
     image: UploadFile = File(...),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
 ):
     tech = Technology(title=title, image=image.file.read())
     session.add(tech)
@@ -91,7 +94,11 @@ def add_technology(
     return {"status": "success"}
 
 @router.delete("/technologies/{tech_id}")
-def delete_technology(tech_id: int, session: Session = Depends(get_session)):
+def delete_technology(
+    tech_id: int,
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
+):
     tech = session.get(Technology, tech_id)
     if not tech:
         raise HTTPException(status_code=404, detail="Technology not found")

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-import axios from 'axios';
+import { getAbout, getAboutTechnologies } from '../api/api';
 import { useTheme } from '../context/ThemeContext';
 import HomeResumeCard from '../features/resume/components/HomeResumeCard';
 import HomeCalendarCard from '../features/calendar/components/HomeCalendarCard';
@@ -22,11 +22,11 @@ const Home = () => {
     useEffect(() => {
         const fetchAboutData = async () => {
             try {
-                const aboutRes = await axios.get('http://localhost:8000/about/');
-                setAboutData(aboutRes.data);
+                const aboutRes = await getAbout();
+                setAboutData(aboutRes);
 
-                const techRes = await axios.get('http://localhost:8000/about/technologies');
-                setTechnologies(techRes.data);
+                const techRes = await getAboutTechnologies();
+                setTechnologies(techRes);
             } catch (error) {
                 console.error('Error fetching about data:', error);
             }
