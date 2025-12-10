@@ -37,10 +37,16 @@ client.interceptors.response.use(
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('user');
                 window.location.href = '/login';
+            } else if (error.response.status >= 500) {
+                // Server error - optionally redirect to error page
+                // Comment this out if you want to handle 500 errors in components
+                console.error('Server error:', error.response.status);
+                // window.location.href = '/error';
             }
         } else if (error.request) {
-            // The request was made but no response was received
-            console.error('No response received:', error.request);
+            // The request was made but no response was received (network error)
+            console.error('No response received (network error):', error.request);
+            // Could show a toast or redirect to error page
         } else {
             // Something happened in setting up the request that triggered an Error
             console.error('Error:', error.message);
