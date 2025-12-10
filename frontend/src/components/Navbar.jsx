@@ -22,11 +22,11 @@ const Navbar = () => {
     return (
         <nav className="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-8">
             <div className="max-w-7xl mx-auto">
-                <div className="bg-glass backdrop-blur-md border border-white/20 dark:border-slate-700/50 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg">
+                <div className={`${location.pathname === '/showcasing' ? '' : 'bg-glass'} backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg`}>
 
                     {/* Title */}
-                    <Link to="/" className="text-xl font-bold text-primary hover:opacity-80 transition-opacity">
-                        Welcome to my space
+                    <Link to="/" className="text-xl font-bold text-primary/80 hover:opacity-80 transition-opacity">
+
                     </Link>
 
                     {/* Desktop Menu */}

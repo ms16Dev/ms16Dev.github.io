@@ -6,5 +6,7 @@ export const projectSchema = z.object({
     end_date: z.string().optional(),
     description: z.string().optional(),
     tags: z.string().optional(),
-    background_image_url: z.string().url("Must be a valid URL").optional().or(z.literal(''))
+    github_link: z.string().url("Must be a valid URL").optional().or(z.literal('')),
+    live_demo_link: z.string().url("Must be a valid URL").optional().or(z.literal('')),
+    background_image: z.any().optional(),
 });

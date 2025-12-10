@@ -10,11 +10,20 @@ const FabricPlane = ({ imageUrl, mousePosition }) => {
     const progressRef = useRef({ value: 0 });
     const originalPositionsRef = useRef(null);
 
+    // Fix color space issues
+    useEffect(() => {
+        if (texture) {
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.needsUpdate = true;
+        }
+    }, [texture]);
+
     // Create textured material
     const material = useMemo(() => {
         return new THREE.MeshBasicMaterial({
             map: texture,
             side: THREE.DoubleSide,
+            toneMapped: false,
         });
     }, [texture]);
 
@@ -118,7 +127,7 @@ const FabricBackground = ({ imageUrl }) => {
 
     return (
         <div className="absolute inset-0 w-full h-full">
-            <Canvas camera={{ position: [0, 0, 2], fov: 50 }}>
+            <Canvas flat camera={{ position: [0, 0, 2], fov: 50 }}>
                 <ambientLight intensity={1} />
                 <Suspense fallback={null}>
                     <FabricPlane imageUrl={imageUrl} mousePosition={mousePosition} />
