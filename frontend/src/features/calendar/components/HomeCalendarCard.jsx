@@ -87,7 +87,7 @@ const HomeCalendarCard = () => {
             <div className="w-3/4 h-1 bg-white/10 rounded-full overflow-hidden flex items-center px-0">
                 <SwatchBook size={18} className="timeline-dot text-accent rounded-full absolute left-8" />
                 <Search size={18} className="timeline-dot text-secondary rounded-full absolute left-14 opacity-60" />
-                <Code2 size={18} className="timeline-dot text-white rounded-full absolute left-8 opacity-40" />
+                <Code2 size={18} className="timeline-dot text-white rounded-full absolute left-8 opacity-80" />
             </div>
 
         </Link>

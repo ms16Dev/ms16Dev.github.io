@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Download } from 'lucide-react';
+import { Mail, MapPin, Phone, Download } from 'lucide-react';
+
 import axios from 'axios';
 
 const Resume = () => {
@@ -52,9 +53,23 @@ const Resume = () => {
                             {personalInfo.professionalTitle || "Professional Title"}
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-600">
-                            {personalInfo.email && <p>📧 {personalInfo.email}</p>}
-                            {personalInfo.phone && <p>📱 {personalInfo.phone}</p>}
-                            {personalInfo.location && <p>📍 {personalInfo.location}</p>}
+                            {personalInfo.email && (
+                                <p className="flex items-center gap-2">
+                                <Mail size={16} /> {personalInfo.email}
+                                </p>
+                            )}
+
+                            {personalInfo.phone && (
+                                <p className="flex items-center gap-2">
+                                <Phone size={16} /> {personalInfo.phone}
+                                </p>
+                            )}
+
+                            {personalInfo.location && (
+                                <p className="flex items-center gap-2">
+                                <MapPin size={16} /> {personalInfo.location}
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -177,7 +192,7 @@ const Resume = () => {
             {/* Floating Download/Print Button */}
             <button
                 onClick={handlePrint}
-                className="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700 transition-colors print:hidden z-50"
+                className="fixed bottom-8 right-8 bg-primary text-white p-4 rounded-full shadow-xl hover:bg-primary/80 transition-colors print:hidden z-50"
                 title="Download as PDF"
             >
                 <Download />
