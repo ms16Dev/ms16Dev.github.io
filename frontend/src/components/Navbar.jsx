@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Calendar, FileText, LayoutGrid, Settings, Menu, X, Home } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
-    const { theme } = useTheme();
 
     const links = [
         { name: 'Home', path: '/', icon: <Home size={20} /> },
@@ -22,11 +20,11 @@ const Navbar = () => {
     return (
         <nav className="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-8">
             <div className="max-w-7xl mx-auto">
-                <div className={`${location.pathname === '/showcasing' ? '' : 'bg-glass'} backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg`}>
+                <div className={`${location.pathname === '/showcasing' ? 'dark' : 'bg-glass'} backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg`}>
 
                     {/* Title */}
                     <Link to="/" className="text-xl font-bold text-primary/80 hover:opacity-80 transition-opacity">
-
+                        Welcom to my space
                     </Link>
 
                     {/* Desktop Menu */}
