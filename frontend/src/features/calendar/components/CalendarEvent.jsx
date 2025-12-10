@@ -55,7 +55,7 @@ const CalendarEvent = ({ event, index, style, className = "" }) => {
             className={`absolute h-14 rounded-full shadow-lg flex items-center px-4 gap-3 cursor-pointer hover:scale-105 transition-transform border border-white/20 overflow-hidden ${getEventColor(index)} ${className}`}
             style={style}
         >
-            <span className="text-2xl min-w-[24px] text-center">{event.icon}</span>
+            <span className="text-5xl text-white min-w-[24px] text-center">{event.icon}</span>
             <div className="flex flex-col leading-tight whitespace-nowrap overflow-hidden">
                 <span className="font-bold text-white">{event.title}</span>
                 <span className="text-xs text-white/80">{event.start_date}</span>
