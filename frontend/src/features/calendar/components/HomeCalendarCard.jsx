@@ -1,6 +1,8 @@
 import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
+import { Search, SwatchBook, Code2 } from 'lucide-react';
+
 
 const HomeCalendarCard = () => {
     const containerRef = useRef(null);
@@ -83,9 +85,9 @@ const HomeCalendarCard = () => {
 
             {/* Timeline Visual */}
             <div className="w-3/4 h-1 bg-white/10 rounded-full overflow-hidden flex items-center px-0">
-                <div className="timeline-dot w-2 h-2 bg-accent rounded-full absolute left-8" />
-                <div className="timeline-dot w-2 h-2 bg-secondary rounded-full absolute left-12 opacity-60" />
-                <div className="timeline-dot w-1 h-1 bg-primary rounded-full absolute left-8 opacity-40" />
+                <SwatchBook size={18} className="timeline-dot text-accent rounded-full absolute left-8" />
+                <Search size={18} className="timeline-dot text-secondary rounded-full absolute left-14 opacity-60" />
+                <Code2 size={18} className="timeline-dot text-white rounded-full absolute left-8 opacity-40" />
             </div>
 
         </Link>
