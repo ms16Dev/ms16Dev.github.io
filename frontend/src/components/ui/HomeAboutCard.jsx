@@ -21,6 +21,12 @@ const HomeAboutCard = ({ aboutData, technologies }) => {
 
     return (
         <div className="relative w-full h-full bg-glass dark:bg-blue-900/40 backdrop-blur-lg rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 border border-white/10 shadow-2xl">
+            <style>{`
+                .swiper-slide-shadow-left,
+                .swiper-slide-shadow-right {
+                    display: none !important;
+                }
+            `}</style>
             {/* Avatar */}
             {aboutData?.avatar_image && (
                 <div className="mb-4">
@@ -58,11 +64,11 @@ const HomeAboutCard = ({ aboutData, technologies }) => {
                         centeredSlides={true}
                         slidesPerView={'auto'}
                         coverflowEffect={{
-                            rotate: 50,
+                            rotate: 0,
                             stretch: 0,
                             depth: 100,
-                            modifier: 1,
-                            slideShadows: true,
+                            modifier: 2.5,
+                            slideShadows: false,
                         }}
                         autoplay={{
                             delay: 2500,
@@ -74,7 +80,7 @@ const HomeAboutCard = ({ aboutData, technologies }) => {
                     >
                         {technologies.map((tech) => (
                             <SwiperSlide key={tech.id} className="!w-24 !h-24">
-                                <div className="w-full h-full rounded-xl flex flex-col items-center justify-center p-3 border border-white/20">
+                                <div className="w-full h-full rounded-xl bg-surface/60 backdrop-blur-md flex flex-col items-center justify-center p-2 border border-white/10 hover:bg-surface/80 transition-colors">
                                     {tech.image && (
                                         <img
                                             src={`data:image/png;base64,${tech.image}`}
