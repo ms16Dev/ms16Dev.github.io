@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import create_db_and_tables
-from .routers import about, projects, calendar, resume, settings
+from .routers import about, projects, calendar, resume, settings, technologies
 
 app = FastAPI(title="Portfolio API")
 
@@ -29,7 +29,10 @@ app.include_router(projects.router)
 app.include_router(calendar.router)
 app.include_router(resume.router)
 app.include_router(settings.router)
+app.include_router(technologies.router)
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Portfolio API"}
+
+# Trigger reload

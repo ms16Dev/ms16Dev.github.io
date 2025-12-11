@@ -1,0 +1,89 @@
+/* Custom range slider styling */
+.calendar-slider {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 100%;
+    height: 8px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+}
+
+.calendar-slider:focus {
+    outline: none;
+}
+
+/* Webkit (Chrome, Safari, Edge) Track */
+.calendar-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: rgb(var(--accent));
+    /* Matching previous bg-accent */
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+/* Webkit Thumb */
+.calendar-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 48px;
+    /* w-12 */
+    width: 48px;
+    /* h-12 */
+    border-radius: 8px;
+    /* rounded-lg */
+    background: rgb(var(--primary));
+    cursor: grab;
+    margin-top: -20px;
+    /* (48px - 8px) / 2 * -1  to center it */
+    box-shadow: 0 0 20px rgba(var(--accent), 0.5);
+    /* Previous shadow */
+    border: 2px solid rgb(var(--surface));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Add a pseudo-element for the inner dot logic if needed, but easier to just style the thumb */
+    /* We can't easily put DOM inside the thumb, so we rely on background image or pure CSS shape */
+    background-image: radial-gradient(circle, rgb(var(--accent)) 40%, transparent 41%);
+    background-size: 16px 16px;
+    /* Size of the inner dot */
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.calendar-slider:active::-webkit-slider-thumb {
+    cursor: grabbing;
+}
+
+/* Mozilla (Firefox) Track */
+.calendar-slider::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: rgb(var(--accent));
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+/* Mozilla Thumb */
+.calendar-slider::-moz-range-thumb {
+    height: 48px;
+    width: 48px;
+    border: none;
+    border-radius: 8px;
+    background: rgb(var(--primary));
+    cursor: grab;
+    box-shadow: 0 0 20px rgba(var(--accent), 0.5);
+    border: 2px solid rgb(var(--surface));
+    background-image: radial-gradient(circle, rgb(var(--accent)) 40%, transparent 41%);
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.calendar-slider:active::-moz-range-thumb {
+    cursor: grabbing;
+}
