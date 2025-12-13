@@ -2,9 +2,11 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from ..database import engine
-from ..models import CalendarEvent
+from ..models import CalendarEvent, Admin
+from ..auth import get_current_admin
+from datetime import date
 
-router = APIRouter(prefix="/calendar", tags=["calendar"])
+router = APIRouter(prefix="/api/v1/calendar", tags=["calendar"])
 
 def get_session():
     with Session(engine) as session:
@@ -17,7 +19,11 @@ def get_events(session: Session = Depends(get_session)):
 from datetime import date
 
 @router.post("/", response_model=CalendarEvent)
-def create_event(event: CalendarEvent, session: Session = Depends(get_session)):
+def create_event(
+    event: CalendarEvent,
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
+):
     if isinstance(event.start_date, str):
         event.start_date = date.fromisoformat(event.start_date)
     if event.end_date and isinstance(event.end_date, str):
@@ -29,7 +35,12 @@ def create_event(event: CalendarEvent, session: Session = Depends(get_session)):
     return event
 
 @router.put("/{event_id}", response_model=CalendarEvent)
-def update_event(event_id: int, event: CalendarEvent, session: Session = Depends(get_session)):
+def update_event(
+    event_id: int,
+    event: CalendarEvent,
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
+):
     db_event = session.get(CalendarEvent, event_id)
     if not db_event:
         raise HTTPException(status_code=404, detail="Event not found")
@@ -46,7 +57,11 @@ def update_event(event_id: int, event: CalendarEvent, session: Session = Depends
     return db_event
 
 @router.delete("/{event_id}")
-def delete_event(event_id: int, session: Session = Depends(get_session)):
+def delete_event(
+    event_id: int,
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
+):
     event = session.get(CalendarEvent, event_id)
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")

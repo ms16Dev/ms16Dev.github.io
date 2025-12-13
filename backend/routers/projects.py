@@ -2,11 +2,12 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, Form, Response
 from sqlmodel import Session, select
 from ..database import engine
-from ..models import Project, Technology, ProjectTechnologyLink, ProjectRead
+from ..models import Project, Technology, ProjectTechnologyLink, ProjectRead, Admin
+from ..auth import get_current_admin
 from datetime import date
 import json
 
-router = APIRouter(prefix="/projects", tags=["projects"])
+router = APIRouter(prefix="/api/v1/projects", tags=["projects"])
 
 def get_session():
     with Session(engine) as session:
@@ -19,7 +20,7 @@ def get_projects(session: Session = Depends(get_session)):
     for p in projects:
         p_dict = p.dict(exclude={"background_image"})
         # Add simulated url field
-        p_dict["background_image_url"] = f"http://localhost:8000/projects/{p.id}/background" if p.background_image else None
+        p_dict["background_image_url"] = f"http://localhost:8000/api/v1/projects/{p.id}/background" if p.background_image else None
         p_dict["technologies"] = p.technologies
         result.append(p_dict)
     return result
@@ -42,7 +43,8 @@ def create_project(
     live_demo_link: Optional[str] = Form(None),
     background_image: Optional[UploadFile] = None,
     technology_ids: Optional[str] = Form(None), # Comma separated IDs or JSON string
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
 ):
     # Parse dates
     s_date = date.fromisoformat(start_date)
@@ -87,7 +89,7 @@ def create_project(
     
     # Return matched structure
     p_dict = new_project.dict(exclude={"background_image"})
-    p_dict["background_image_url"] = f"http://localhost:8000/projects/{new_project.id}/background" if new_project.background_image else None
+    p_dict["background_image_url"] = f"http://localhost:8000/api/v1/projects/{new_project.id}/background" if new_project.background_image else None
     return p_dict
 
 @router.put("/{project_id}", response_model=ProjectRead)
@@ -102,7 +104,8 @@ def update_project(
     live_demo_link: Optional[str] = Form(None),
     background_image: Optional[UploadFile] = None,
     technology_ids: Optional[str] = Form(None),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
 ):
     project = session.get(Project, project_id)
     if not project:
@@ -141,11 +144,15 @@ def update_project(
     session.refresh(project)
     
     p_dict = project.dict(exclude={"background_image"})
-    p_dict["background_image_url"] = f"http://localhost:8000/projects/{project.id}/background" if project.background_image else None
+    p_dict["background_image_url"] = f"http://localhost:8000/api/v1/projects/{project.id}/background" if project.background_image else None
     return p_dict
 
 @router.delete("/{project_id}")
-def delete_project(project_id: int, session: Session = Depends(get_session)):
+def delete_project(
+    project_id: int,
+    session: Session = Depends(get_session),
+    current_admin: Admin = Depends(get_current_admin)
+):
     project = session.get(Project, project_id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")

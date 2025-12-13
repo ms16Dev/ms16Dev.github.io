@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { getSettings, updateSettings as apiUpdateSettings } from '../../../api/api';
 import { useToast } from '../../../context/ToastContext';
-
-const SETTINGS_URL = 'http://localhost:8000/settings/';
 
 export const useSettings = () => {
     const [settings, setSettings] = useState({ calendar_start_year: 2020, calendar_end_year: 2030 });
@@ -12,8 +10,8 @@ export const useSettings = () => {
     const fetchSettings = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(SETTINGS_URL);
-            if (response.data) setSettings(response.data);
+            const data = await getSettings();
+            if (data) setSettings(data);
         } catch (err) {
             console.error(err);
         } finally {
@@ -24,7 +22,7 @@ export const useSettings = () => {
     const updateSettings = async (settingsData) => {
         setLoading(true);
         try {
-            await axios.put(SETTINGS_URL, settingsData);
+            await apiUpdateSettings(settingsData);
             addToast('Settings updated!', 'success');
             fetchSettings();
             return true;

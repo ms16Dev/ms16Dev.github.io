@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, MapPin, Phone, Download } from 'lucide-react';
 
-import axios from 'axios';
+import { getResume } from '../api/api';
 
 const Resume = () => {
     const [resumeData, setResumeData] = useState(null);
@@ -9,9 +9,9 @@ const Resume = () => {
     useEffect(() => {
         const fetchResume = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/resume/');
-                if (response.data && response.data.content) {
-                    setResumeData(JSON.parse(response.data.content));
+                const response = await getResume();
+                if (response && response.content) {
+                    setResumeData(JSON.parse(response.content));
                 }
             } catch (error) {
                 console.error("Failed to fetch resume", error);
@@ -55,19 +55,19 @@ const Resume = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-600">
                             {personalInfo.email && (
                                 <p className="flex items-center gap-2">
-                                <Mail size={16} /> {personalInfo.email}
+                                    <Mail size={16} /> {personalInfo.email}
                                 </p>
                             )}
 
                             {personalInfo.phone && (
                                 <p className="flex items-center gap-2">
-                                <Phone size={16} /> {personalInfo.phone}
+                                    <Phone size={16} /> {personalInfo.phone}
                                 </p>
                             )}
 
                             {personalInfo.location && (
                                 <p className="flex items-center gap-2">
-                                <MapPin size={16} /> {personalInfo.location}
+                                    <MapPin size={16} /> {personalInfo.location}
                                 </p>
                             )}
                         </div>

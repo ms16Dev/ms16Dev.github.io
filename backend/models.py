@@ -67,3 +67,9 @@ class Settings(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     calendar_start_year: int = Field(default=2020)
     calendar_end_year: int = Field(default=2030)
+
+class Admin(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    username: str = Field(unique=True, index=True)
+    hashed_password: str
+

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { User, Trash2 } from 'lucide-react';
 import { useAbout } from '../hooks/useAbout';
+import { useToast } from '../../../context/ToastContext';
 
 const AdminAbout = () => {
     const { aboutData, technologies, fetchAboutData, updateAbout, addTechnology, deleteTechnology } = useAbout();
+    const { addToast } = useToast();
 
     // Local state for forms
     const [localAbout, setLocalAbout] = useState({ name: '', occupation: '', title: '', description: '', social_links: '[]', avatar_image: null });
@@ -38,7 +40,7 @@ const AdminAbout = () => {
     const handleAddTechnology = async (e) => {
         e.preventDefault();
         if (!newTech.title || !newTech.image) {
-            alert("Please provide both title and image.");
+            addToast('Please provide both title and image.', 'warning');
             return;
         }
         const formData = new FormData();

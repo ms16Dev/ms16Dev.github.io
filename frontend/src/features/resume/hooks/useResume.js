@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { getResume, uploadResume } from '../../../api/api';
 import { useToast } from '../../../context/ToastContext';
-
-const RESUME_URL = 'http://localhost:8000/resume/';
 
 export const useResume = () => {
     const [resumeData, setResumeData] = useState(null);
@@ -12,10 +10,10 @@ export const useResume = () => {
     const fetchResume = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(RESUME_URL);
-            if (response.data && response.data.content) {
+            const data = await getResume();
+            if (data && data.content) {
                 try {
-                    setResumeData(JSON.parse(response.data.content));
+                    setResumeData(JSON.parse(data.content));
                 } catch (e) {
                     setResumeData(null);
                 }
@@ -30,7 +28,7 @@ export const useResume = () => {
     const updateResume = async (formData) => {
         setLoading(true);
         try {
-            await axios.post(RESUME_URL, { content: JSON.stringify(formData) });
+            await uploadResume({ content: JSON.stringify(formData) });
             addToast('Resume updated successfully!', 'success');
             fetchResume();
             return true;

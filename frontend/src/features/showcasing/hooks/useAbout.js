@@ -1,9 +1,6 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { getAbout, updateAbout as apiUpdateAbout, getAboutTechnologies, addAboutTechnology, deleteAboutTechnology } from '../../../api/api';
 import { useToast } from '../../../context/ToastContext';
-
-const ABOUT_URL = 'http://localhost:8000/about/';
-const TECH_URL = 'http://localhost:8000/about/technologies';
 
 export const useAbout = () => {
     const [aboutData, setAboutData] = useState({ name: '', occupation: '', title: '', description: '', social_links: '[]', avatar_image: null });
@@ -14,26 +11,23 @@ export const useAbout = () => {
     const fetchAboutData = useCallback(async () => {
         setLoading(true);
         try {
-            const [aboutRes, techRes] = await Promise.all([
-                axios.get(ABOUT_URL),
-                axios.get(TECH_URL)
+            const [aboutData, techData] = await Promise.all([
+                getAbout(),
+                getAboutTechnologies()
             ]);
-            if (aboutRes.data) setAboutData(aboutRes.data);
-            setTechnologies(techRes.data);
+            if (aboutData) setAboutData(aboutData);
+            setTechnologies(techData);
         } catch (err) {
             console.error(err);
-            // addToast('Failed to fetch about data', 'error');
         } finally {
             setLoading(false);
         }
-    }, [addToast]);
+    }, []);
 
     const updateAbout = async (formData) => {
         setLoading(true);
         try {
-            await axios.post(ABOUT_URL, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            await apiUpdateAbout(formData);
             addToast('About section updated!', 'success');
             fetchAboutData();
             return true;
@@ -49,9 +43,7 @@ export const useAbout = () => {
     const addTechnology = async (formData) => {
         setLoading(true);
         try {
-            await axios.post(TECH_URL, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            await addAboutTechnology(formData);
             addToast('Technology added!', 'success');
             fetchAboutData();
             return true;
@@ -67,7 +59,7 @@ export const useAbout = () => {
     const deleteTechnology = async (id) => {
         setLoading(true);
         try {
-            await axios.delete(`${TECH_URL}/${id}`);
+            await deleteAboutTechnology(id);
             setTechnologies(prev => prev.filter(t => t.id !== id));
             addToast('Technology deleted', 'success');
             return true;

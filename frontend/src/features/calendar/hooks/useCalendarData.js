@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getEvents, getSettings } from '../../../api/api';
 
 export const useCalendarData = () => {
     const [events, setEvents] = useState([]);
@@ -10,14 +10,14 @@ export const useCalendarData = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [eventsRes, settingsRes] = await Promise.all([
-                    axios.get('http://localhost:8000/calendar/'),
-                    axios.get('http://localhost:8000/settings/')
+                const [eventsData, settingsData] = await Promise.all([
+                    getEvents(),
+                    getSettings()
                 ]);
 
-                setEvents(eventsRes.data);
-                if (settingsRes.data) {
-                    setSettings(settingsRes.data);
+                setEvents(eventsData);
+                if (settingsData) {
+                    setSettings(settingsData);
                 }
             } catch (err) {
                 console.error("Failed to fetch calendar data", err);
