@@ -40,16 +40,16 @@ const HomeAboutCard = ({ aboutData, technologies }) => {
 
             {/* Name & Occupation */}
             <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-2">
-                {aboutData?.name || 'Your Name'}
+                {aboutData?.name || ''}
             </h2>
             <p className="text-lg text-accent mb-6 font-medium">
-                {aboutData?.occupation || 'Your Occupation'}
+                {aboutData?.occupation || ''}
             </p>
 
             {/* Title & Description */}
 
             <p className="text-base md:text-lg text-primary text-center max-w-lg leading-relaxed mb-6">
-                {aboutData?.description || 'Passionate developer crafting digital experiences.'}
+                {aboutData?.description || ''}
             </p>
 
             {/* Technology Carousel */}
