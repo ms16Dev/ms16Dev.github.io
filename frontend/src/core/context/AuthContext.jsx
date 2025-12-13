@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { login as apiLogin } from '../../../core/api/api';
+import { login as apiLogin } from '@/core/api/api';
 
 const AuthContext = createContext(null);
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
         setUser(null);
-        window.location.href = '/login';
+        window.location.href = '/';
     };
 
     const isAuthenticated = () => {

@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react';
-import { getProjects, createProject as apiCreateProject, updateProject as apiUpdateProject, deleteProject as apiDeleteProject } from '../../../core/api/api';
-import { useToast } from '../../../core/context/ToastContext';
+import { 
+    getProjects,
+    createProject as apiCreateProject,
+    updateProject as apiUpdateProject,
+    deleteProject as apiDeleteProject
+ } from '@/core/api/api';
+import { useToast } from '@/core/context/ToastContext';
 
 export const useProjects = () => {
     const [projects, setProjects] = useState([]);

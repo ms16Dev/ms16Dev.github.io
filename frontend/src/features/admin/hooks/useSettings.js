@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { getSettings, updateSettings as apiUpdateSettings } from '../../../core/api/api';
-import { useToast } from '../../../core/context/ToastContext';
+import { getSettings, updateSettings as apiUpdateSettings } from '@/core/api/api';
+import { useToast } from '@/core/context/ToastContext';
 
 export const useSettings = () => {
     const [settings, setSettings] = useState({ calendar_start_year: 2020, calendar_end_year: 2030 });

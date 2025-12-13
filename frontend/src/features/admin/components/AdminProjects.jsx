@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProjects } from '../hooks/useProjects';
 import { projectSchema } from '../schemas';
-import { getTechnologies } from '../../../core/api/api';
+import { getTechnologies } from '@/core/api/api';
 
 const AdminProjects = () => {
     const { projects, fetchProjects, createProject, updateProject, deleteProject } = useProjects();

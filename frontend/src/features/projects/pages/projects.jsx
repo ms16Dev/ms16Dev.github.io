@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import FabricBackground from '../components/FabricBackground';
-import { useProjects } from '../../admin/hooks/useProjects';
+import { useProjectsData } from '../hooks/useProjectsData';
 import ProjectShowcaseInfo from '../components/ProjectShowcaseInfo';
 import ProjectShowcaseNavigation from '../components/ProjectShowcaseNavigation';
 
-const Showcasing = () => {
-    const { projects, loading, fetchProjects } = useProjects();
+const Projects = () => {
+    const { projects, loading, fetchProjectsData } = useProjectsData();
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -15,50 +16,55 @@ const Showcasing = () => {
     const titleRef = useRef(null);
     const detailsRef = useRef(null);
 
-    // Initial load
+    /* --------------------------- Initial load --------------------------- */
+
     useEffect(() => {
-        fetchProjects();
-    }, [fetchProjects]);
+        fetchProjectsData();
+    }, [fetchProjectsData]);
 
+    /* ---------------------- Animation on index change ------------------- */
 
-    // Animation when index changes
     useEffect(() => {
         if (!projects || projects.length === 0) return;
 
         const ctx = gsap.context(() => {
-            // Animate Content (Slide Up)
             const tl = gsap.timeline();
 
             if (titleRef.current) {
-                tl.fromTo(titleRef.current,
+                tl.fromTo(
+                    titleRef.current,
                     { y: 100, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+                    { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
                 );
             }
 
             if (detailsRef.current) {
-                tl.fromTo(detailsRef.current,
+                tl.fromTo(
+                    detailsRef.current,
                     { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-                    "-=0.6"
+                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+                    '-=0.6'
                 );
             }
-
         }, containerRef);
 
         return () => ctx.revert();
     }, [currentIndex, projects]);
 
-    // Mouse wheel scroll navigation logic
+    /* --------------------- Mouse wheel navigation ----------------------- */
+
     useEffect(() => {
         if (!projects || projects.length === 0) return;
 
         let scrollTimeout;
+
         const handleWheel = (event) => {
             event.preventDefault();
             clearTimeout(scrollTimeout);
+
             scrollTimeout = setTimeout(() => {
                 if (isAnimating) return;
+
                 if (event.deltaY > 0) handleNext();
                 else if (event.deltaY < 0) handlePrev();
             }, 50);
@@ -75,12 +81,14 @@ const Showcasing = () => {
             }
             clearTimeout(scrollTimeout);
         };
-    }, [projects, isAnimating, currentIndex]); // Added currentIndex to dependencies to ensure state freshness is handled if needed (though handleNext accesses state via setter callback usually)
+    }, [projects, isAnimating, currentIndex]);
+
+    /* --------------------------- Navigation ----------------------------- */
 
     const handleNext = () => {
         if (isAnimating || !projects.length) return;
-        setIsAnimating(true);
 
+        setIsAnimating(true);
         const targets = [titleRef.current, detailsRef.current].filter(Boolean);
 
         gsap.to(targets, {
@@ -96,8 +104,8 @@ const Showcasing = () => {
 
     const handlePrev = () => {
         if (isAnimating || !projects.length) return;
-        setIsAnimating(true);
 
+        setIsAnimating(true);
         const targets = [titleRef.current, detailsRef.current].filter(Boolean);
 
         gsap.to(targets, {
@@ -111,46 +119,53 @@ const Showcasing = () => {
         });
     };
 
+    /* ------------------------------ States ------------------------------ */
+
     if (loading && projects.length === 0) {
-        return <div className="min-h-screen flex items-center justify-center text-white bg-black">Loading Projects...</div>;
+        return (
+            <div className="min-h-screen flex items-center justify-center text-white bg-black">
+                Loading Projects...
+            </div>
+        );
     }
 
     if (!projects || projects.length === 0) {
-        return <div className="min-h-screen flex items-center justify-center text-white bg-black">No projects found.</div>;
+        return (
+            <div className="min-h-screen flex items-center justify-center text-white bg-black">
+                No projects found.
+            </div>
+        );
     }
 
     const currentProject = projects[currentIndex];
-
-    // Safety check
     if (!currentProject) return null;
+
+    /* ------------------------------- UI -------------------------------- */
 
     return (
         <div ref={containerRef} className="h-screen w-full relative overflow-hidden bg-black">
             {/* Dynamic Background */}
-            <FabricBackground key={currentIndex} imageUrl={currentProject.background_image_url} />
+            <FabricBackground
+                key={currentIndex}
+                imageUrl={currentProject.background_image_url}
+            />
+
             <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-            {/* Content Container */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 md:px-20">
-                <div ref={contentRef} className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-
-                    {/* Left: Info */}
+                <div
+                    ref={contentRef}
+                    className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+                >
                     <ProjectShowcaseInfo
                         project={currentProject}
                         titleRef={titleRef}
                         detailsRef={detailsRef}
                     />
 
-                    {/* Right: Visual Placeholder (for balance) */}
-                    <div className="hidden md:flex justify-center items-center h-full">
-                        {/* 
-                          Potential for a 3D model or detailed image later. 
-                          Currently keeping empty to maintain the "vast" feel 
-                        */}
-                    </div>
+                    <div className="hidden md:flex justify-center items-center h-full" />
                 </div>
 
-                {/* Navigation */}
                 <ProjectShowcaseNavigation
                     projects={projects}
                     currentIndex={currentIndex}
@@ -159,9 +174,10 @@ const Showcasing = () => {
                     isAnimating={isAnimating}
                 />
 
-                {/* Footer / Counter */}
                 <div className="absolute bottom-12 left-8 md:left-12 text-white/50 font-mono text-xl">
-                    <span className="text-accent">{String(currentIndex + 1).padStart(2, '0')}</span>
+                    <span className="text-accent">
+                        {String(currentIndex + 1).padStart(2, '0')}
+                    </span>
                     <span className="mx-2">/</span>
                     <span>{String(projects.length).padStart(2, '0')}</span>
                 </div>
@@ -170,4 +186,4 @@ const Showcasing = () => {
     );
 };
 
-export default Showcasing;
+export default Projects;
