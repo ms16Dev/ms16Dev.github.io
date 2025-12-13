@@ -1,7 +1,31 @@
 import { createContext, useContext, useState, useCallback } from 'react';
-import { X, CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 
 const ToastContext = createContext(null);
+
+// Toast type configurations with icon colors
+const toastConfig = {
+    success: {
+        icon: CheckCircle,
+        iconColor: 'text-green-500 dark:text-green-400',
+        bgGlow: 'shadow-green-500/10'
+    },
+    error: {
+        icon: AlertCircle,
+        iconColor: 'text-red-500 dark:text-red-400',
+        bgGlow: 'shadow-red-500/10'
+    },
+    warning: {
+        icon: AlertTriangle,
+        iconColor: 'text-yellow-500 dark:text-yellow-400',
+        bgGlow: 'shadow-yellow-500/10'
+    },
+    info: {
+        icon: Info,
+        iconColor: 'text-blue-500 dark:text-blue-400',
+        bgGlow: 'shadow-blue-500/10'
+    }
+};
 
 export const ToastProvider = ({ children }) => {
     const [toasts, setToasts] = useState([]);
@@ -24,32 +48,45 @@ export const ToastProvider = ({ children }) => {
     return (
         <ToastContext.Provider value={{ addToast, removeToast }}>
             {children}
-            <div className="fixed top-4 right-4 z-50 flex flex-col gap-3">
-                {toasts.map(toast => (
-                    <div
-                        key={toast.id}
-                        className={`
-                            flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md border animate-slideIn
-                            ${toast.type === 'success' ? 'bg-green-500/20 border-green-500/50 text-green-100' : ''}
-                            ${toast.type === 'error' ? 'bg-red-500/20 border-red-500/50 text-red-100' : ''}
-                            ${toast.type === 'info' ? 'bg-blue-500/20 border-blue-500/50 text-blue-100' : ''}
-                        `}
-                        role="alert"
-                    >
-                        {toast.type === 'success' && <CheckCircle size={20} className="text-green-400" />}
-                        {toast.type === 'error' && <AlertCircle size={20} className="text-red-400" />}
-                        {toast.type === 'info' && <Info size={20} className="text-blue-400" />}
+            <div className="fixed top-20 left-1/2 -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 z-50 flex flex-col gap-3 w-full max-w-md px-4 md:px-0">
+                {toasts.map(toast => {
+                    const config = toastConfig[toast.type] || toastConfig.info;
+                    const Icon = config.icon;
 
-                        <p className="font-medium text-sm">{toast.message}</p>
-
-                        <button
-                            onClick={() => removeToast(toast.id)}
-                            className="ml-4 hover:bg-white/10 rounded-full p-1 transition-colors"
+                    return (
+                        <div
+                            key={toast.id}
+                            className={`
+                                flex items-center gap-3 px-4 py-3
+                                bg-surface dark:bg-surface border-l-4 border-secondary
+                                shadow-xl ${config.bgGlow}
+                                backdrop-blur-sm
+                                animate-slideIn
+                                min-w-[300px]
+                            `}
+                            role="alert"
                         >
-                            <X size={16} />
-                        </button>
-                    </div>
-                ))}
+                            {/* Icon */}
+                            <div className="flex-shrink-0">
+                                <Icon size={22} className={config.iconColor} />
+                            </div>
+
+                            {/* Message */}
+                            <p className="flex-1 font-medium text-sm text-primary dark:text-primary">
+                                {toast.message}
+                            </p>
+
+                            {/* Close Button */}
+                            <button
+                                onClick={() => removeToast(toast.id)}
+                                className="flex-shrink-0 hover:bg-muted/10 dark:hover:bg-white/10 p-1.5 transition-colors text-muted hover:text-primary"
+                                aria-label="Close notification"
+                            >
+                                <X size={16} />
+                            </button>
+                        </div>
+                    );
+                })}
             </div>
         </ToastContext.Provider>
     );

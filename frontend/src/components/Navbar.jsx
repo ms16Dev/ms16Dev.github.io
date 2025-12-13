@@ -51,7 +51,7 @@ const Navbar = () => {
                         {isAuthenticated() && (
                             <button
                                 onClick={logout}
-                                className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-all duration-300 group"
+                                className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg text-accent hover:bg-accent/20 transition-all duration-300 group"
                                 title="Logout"
                             >
                                 <LogOut size={20} className="group-hover:scale-110 transition-transform duration-300" />
@@ -89,7 +89,7 @@ const Navbar = () => {
                                         logout();
                                         setIsOpen(false);
                                     }}
-                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 transition-colors"
+                                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-secondary transition-colors"
                                 >
                                     <LogOut size={20} />
                                     <span className="font-medium">Logout</span>
