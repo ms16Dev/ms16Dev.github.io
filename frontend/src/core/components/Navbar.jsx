@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Calendar, FileText, LayoutGrid, Settings, Menu, X, Home, LogOut } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
-import { useAuth } from '../features/auth/context/AuthContext';
+import { useAuth } from '../../features/auth/context/AuthContext';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react';
 import { User, Trash2 } from 'lucide-react';
 import { useAbout } from '../hooks/useAbout';
-import { useToast } from '../../../context/ToastContext';
 
 const AdminAbout = () => {
-    const { aboutData, technologies, fetchAboutData, updateAbout, addTechnology, deleteTechnology } = useAbout();
-    const { addToast } = useToast();
+    const {
+        aboutData,
+        technologies,
+        fetchAboutData,
+        updateAbout,
+        addTechnology,
+        deleteTechnology,
+        notify
+    } = useAbout();
 
     // Local state for forms
     const [localAbout, setLocalAbout] = useState({ name: '', occupation: '', title: '', description: '', social_links: '[]', avatar_image: null });
@@ -17,9 +23,7 @@ const AdminAbout = () => {
     }, [fetchAboutData]);
 
     useEffect(() => {
-        if (aboutData) {
-            setLocalAbout({ ...aboutData, avatar_image: null });
-        }
+        if (aboutData) setLocalAbout({ ...aboutData, avatar_image: null });
     }, [aboutData]);
 
     const handleSaveAbout = async (e) => {
@@ -30,9 +34,7 @@ const AdminAbout = () => {
         formData.append('title', localAbout.title);
         formData.append('description', localAbout.description);
         formData.append('social_links', localAbout.social_links);
-        if (avatarFile) {
-            formData.append('avatar', avatarFile);
-        }
+        if (avatarFile) formData.append('avatar', avatarFile);
 
         await updateAbout(formData);
     };
@@ -40,7 +42,7 @@ const AdminAbout = () => {
     const handleAddTechnology = async (e) => {
         e.preventDefault();
         if (!newTech.title || !newTech.image) {
-            addToast('Please provide both title and image.', 'warning');
+            notify('Please provide both title and image.', 'warning');
             return;
         }
         const formData = new FormData();
@@ -50,7 +52,6 @@ const AdminAbout = () => {
         const success = await addTechnology(formData);
         if (success) {
             setNewTech({ title: '', image: null });
-            // Reset file input
             const fileInput = document.getElementById('tech-image-input');
             if (fileInput) fileInput.value = "";
         }

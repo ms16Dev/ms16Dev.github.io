@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, MapPin, Phone, Download } from 'lucide-react';
 
-import { getResume } from '../api/api';
+import { getResume } from '../../../core/api/api';
 
 const Resume = () => {
     const [resumeData, setResumeData] = useState(null);

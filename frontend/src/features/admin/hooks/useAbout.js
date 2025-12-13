@@ -1,6 +1,12 @@
 import { useState, useCallback } from 'react';
-import { getAbout, updateAbout as apiUpdateAbout, getAboutTechnologies, addAboutTechnology, deleteAboutTechnology } from '../../../api/api';
-import { useToast } from '../../../context/ToastContext';
+import {
+    getAbout,
+    updateAbout as apiUpdateAbout,
+    getAboutTechnologies,
+    addAboutTechnology,
+    deleteAboutTechnology
+} from '@/core/api/api';
+import { useToast } from '@/core/context/ToastContext';
 
 export const useAbout = () => {
     const [aboutData, setAboutData] = useState({ name: '', occupation: '', title: '', description: '', social_links: '[]', avatar_image: null });
@@ -11,25 +17,23 @@ export const useAbout = () => {
     const fetchAboutData = useCallback(async () => {
         setLoading(true);
         try {
-            const [aboutData, techData] = await Promise.all([
-                getAbout(),
-                getAboutTechnologies()
-            ]);
-            if (aboutData) setAboutData(aboutData);
-            setTechnologies(techData);
+            const [aboutRes, techRes] = await Promise.all([getAbout(), getAboutTechnologies()]);
+            if (aboutRes) setAboutData(aboutRes);
+            setTechnologies(techRes);
         } catch (err) {
             console.error(err);
+            addToast('Failed to fetch About data', 'error');
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [addToast]);
 
     const updateAbout = async (formData) => {
         setLoading(true);
         try {
             await apiUpdateAbout(formData);
             addToast('About section updated!', 'success');
-            fetchAboutData();
+            await fetchAboutData();
             return true;
         } catch (err) {
             console.error(err);
@@ -45,7 +49,7 @@ export const useAbout = () => {
         try {
             await addAboutTechnology(formData);
             addToast('Technology added!', 'success');
-            fetchAboutData();
+            await fetchAboutData();
             return true;
         } catch (err) {
             console.error(err);
@@ -72,6 +76,9 @@ export const useAbout = () => {
         }
     };
 
+    // Unified toast helper for validations in component
+    const notify = (message, type = 'info') => addToast(message, type);
+
     return {
         aboutData,
         technologies,
@@ -79,6 +86,7 @@ export const useAbout = () => {
         fetchAboutData,
         updateAbout,
         addTechnology,
-        deleteTechnology
+        deleteTechnology,
+        notify
     };
 };

@@ -4,7 +4,7 @@ import { useResume } from '../hooks/useResume';
 // Adjusted import path based on where this file is.
 // This file: frontend/src/features/resume/components/AdminResume.jsx
 // ResumeForm: frontend/src/components/ResumeForm.jsx
-import ResumeForm from '../../../components/ResumeForm';
+import ResumeForm from '../../../core/components/ResumeForm';
 
 const AdminResume = () => {
     const { resumeData, fetchResume, updateResume } = useResume();

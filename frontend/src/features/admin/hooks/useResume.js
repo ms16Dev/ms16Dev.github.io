@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { getResume, uploadResume } from '../../../api/api';
-import { useToast } from '../../../context/ToastContext';
+import { getResume, uploadResume } from '../../../core/api/api';
+import { useToast } from '../../../core/context/ToastContext';
 
 export const useResume = () => {
     const [resumeData, setResumeData] = useState(null);

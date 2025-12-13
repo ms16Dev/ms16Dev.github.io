@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import FabricBackground from '../components/FabricBackground';
-import { useProjects } from '../features/projects/hooks/useProjects';
-import ProjectShowcaseInfo from '../features/projects/components/ProjectShowcaseInfo';
-import ProjectShowcaseNavigation from '../features/projects/components/ProjectShowcaseNavigation';
+import { useProjects } from '../../admin/hooks/useProjects';
+import ProjectShowcaseInfo from '../components/ProjectShowcaseInfo';
+import ProjectShowcaseNavigation from '../components/ProjectShowcaseNavigation';
 
 const Showcasing = () => {
     const { projects, loading, fetchProjects } = useProjects();

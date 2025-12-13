@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-import { useCalendarData } from '../features/calendar/hooks/useCalendarData';
-import { useTimelineCalculations } from '../features/calendar/hooks/useTimelineCalculations';
-import { useCalendarInteraction } from '../features/calendar/hooks/useCalendarInteraction';
-import CalendarTimeline from '../features/calendar/components/CalendarTimeline';
-import CalendarScrollbar from '../features/calendar/components/CalendarScrollbar';
-import CalendarYearCounter from '../features/calendar/components/CalendarYearCounter';
+import { useCalendarData } from '../hooks/useCalendarData';
+import { useTimelineCalculations } from '../hooks/useTimelineCalculations';
+import { useCalendarInteraction } from '../hooks/useCalendarInteraction';
+import CalendarTimeline from '../components/CalendarTimeline';
+import CalendarScrollbar from '../components/CalendarScrollbar';
+import CalendarYearCounter from '../components/CalendarYearCounter';
 
 const Calendar = () => {
     const { events, settings } = useCalendarData();

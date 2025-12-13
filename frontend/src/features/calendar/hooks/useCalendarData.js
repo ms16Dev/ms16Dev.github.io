@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEvents, getSettings } from '../../../api/api';
+import { getEvents, getSettings } from '../../../core/api/api';
 
 export const useCalendarData = () => {
     const [events, setEvents] = useState([]);

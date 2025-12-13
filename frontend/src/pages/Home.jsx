@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-import { getAbout, getAboutTechnologies } from '../api/api';
-import { useTheme } from '../context/ThemeContext';
-import HomeResumeCard from '../features/resume/components/HomeResumeCard';
-import HomeCalendarCard from '../features/calendar/components/HomeCalendarCard';
-import HomeAboutCard from '../components/ui/HomeAboutCard';
+import { getAbout, getAboutTechnologies } from '../core/api/api';
+import { useTheme } from '../core/context/ThemeContext';
+import HomeResumeCard from '../core/components/ui/HomeResumeCard';
+import HomeCalendarCard from '../core/components/ui/HomeCalendarCard';
+import HomeAboutCard from '../core/components/ui/HomeAboutCard';
 
 const Home = () => {
     const containerRef = useRef(null);

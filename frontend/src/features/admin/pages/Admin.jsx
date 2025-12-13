@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { User, Folder, Calendar, FileText, Settings } from 'lucide-react';
 
-import AdminAbout from '../features/showcasing/components/AdminAbout';
-import AdminProjects from '../features/projects/components/AdminProjects';
-import AdminCalendar from '../features/calendar/components/AdminCalendar';
-import AdminResume from '../features/resume/components/AdminResume';
-import AdminSettings from '../features/admin/components/AdminSettings';
+import AdminAbout from '../components/AdminAbout';
+import AdminProjects from '../components/AdminProjects';
+import AdminCalendar from '../components/AdminCalendar';
+import AdminResume from '../components/AdminResume';
+import AdminSettings from '../components/AdminSettings';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('about');

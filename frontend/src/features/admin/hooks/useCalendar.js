@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react';
-import { getEvents, createEvent as apiCreateEvent, updateEvent as apiUpdateEvent, deleteEvent as apiDeleteEvent } from '../../../api/api';
-import { useToast } from '../../../context/ToastContext';
+import {
+     getEvents,
+     createEvent as apiCreateEvent,
+     updateEvent as apiUpdateEvent,
+     deleteEvent as apiDeleteEvent
+     } from '@/core/api/api';
+import { useToast } from '@/core/context/ToastContext';
 
 export const useCalendar = () => {
     const [events, setEvents] = useState([]);
