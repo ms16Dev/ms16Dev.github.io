@@ -3,7 +3,7 @@ import { getEvents, getSettings } from '@/core/api/api';
 
 export const useCalendarData = () => {
     const [events, setEvents] = useState([]);
-    const [settings, setSettings] = useState({ calendar_start_year: 2020, calendar_end_year: 2030 });
+    const [settings, setSettings] = useState({ calendar_start_year: 2024, calendar_end_year: 2030 });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
