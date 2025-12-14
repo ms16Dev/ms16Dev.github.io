@@ -1,7 +1,7 @@
 import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
-import { getEventColor } from '../../../utils/colors';
-import { formatDateRange } from '../../../utils/dateUtils';
+import { getEventColor } from '@/utils/colors';
+import { formatDateRange } from '@/utils/dateUtils';
 
 const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
     if (!project) return null;

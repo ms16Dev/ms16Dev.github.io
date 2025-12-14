@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
-import { getEventColor } from '../../../utils/colors';
+import { getEventColor } from '@/utils/colors';
 
 const CalendarEvent = ({ event, index, style, className = "" }) => {
     const elRef = useRef(null);

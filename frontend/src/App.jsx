@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import { ToastProvider } from './context/ToastContext';
-import { AuthProvider } from './features/auth/context/AuthContext';
-import ErrorBoundary from './components/ErrorBoundary';
-import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import Showcasing from './pages/Showcasing';
-import Calendar from './pages/Calendar';
-import Resume from './pages/Resume';
-import Admin from './pages/Admin';
-import Login from './features/auth/components/Login';
-import NotFound from './pages/NotFound';
-import ServerError from './pages/ServerError';
+import { ThemeProvider } from '@/core/context/ThemeContext';
+import { ToastProvider } from '@/core/context/ToastContext';
+import { AuthProvider } from '@/core/context/AuthContext';
+import ErrorBoundary from '@/core/components/ErrorBoundary';
+import ProtectedRoute from '@/core/components/ProtectedRoute';
+import Layout from '@/core/components/Layout';
+import Home from '@/pages/Home';
+import Showcasing from '@/features/projects/pages/projects';
+import Calendar from '@/features/calendar/pages/Calendar';
+import Resume from '@/features/resume/pages/Resume';
+import Admin from '@/features/admin/pages/Admin';
+import Login from '@/pages/Login';
+import NotFound from '@/pages/NotFound';
+import ServerError from '@/pages/ServerError';
 
 function App() {
   return (
@@ -34,9 +34,9 @@ function App() {
                       <Admin />
                     </ProtectedRoute>
                   } />
-                  {/* 404 Catch-all - must be last */}
-                  <Route path="*" element={<NotFound />} />
                 </Route>
+                {/* 404 Catch-all - must be last */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </Router>
           </AuthProvider>
