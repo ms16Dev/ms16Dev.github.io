@@ -2,6 +2,8 @@ import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import { getEventColor } from '@/utils/colors';
 import { formatDateRange } from '@/utils/dateUtils';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
     if (!project) return null;
@@ -29,7 +31,7 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
                             <div key={tech.id} className="relative group">
                                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 p-2 overflow-hidden border border-white/10 group-hover:border-accent/50 transition-colors backdrop-blur-sm">
                                     <img
-                                        src={`http://localhost:8000/api/v1/technologies/${tech.id}/image`}
+                                        src={`${API_BASE_URL}/technologies/${tech.id}/image`}
                                         alt={tech.title}
                                         className="w-full h-full object-contain"
                                         onError={(e) => e.target.style.display = 'none'}

@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useProjects } from '../hooks/useProjects';
 import { projectSchema } from '../schemas';
 import { getTechnologies } from '@/core/api/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const AdminProjects = () => {
     const { projects, fetchProjects, createProject, updateProject, deleteProject } = useProjects();
@@ -148,7 +150,7 @@ const AdminProjects = () => {
                                         }`}
                                 >
                                     <div className="w-6 h-6 rounded bg-black/10 dark:bg-white/10 overflow-hidden flex-shrink-0">
-                                        <img src={`http://localhost:8000/api/v1/technologies/${tech.id}/image`} alt={tech.title} className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
+                                        <img  src={`${API_BASE_URL}/technologies/${tech.id}/image`} alt={tech.title} className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
                                     </div>
                                     <span className="text-sm font-medium truncate">{tech.title}</span>
                                 </div>
