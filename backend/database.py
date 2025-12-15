@@ -1,7 +1,9 @@
 import os
 from sqlmodel import SQLModel, create_engine
+from config import settings
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = settings.DATABASE_URL
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not set")

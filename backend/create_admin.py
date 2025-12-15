@@ -8,6 +8,8 @@ from sqlmodel import Session, select
 from database import engine
 from models import Admin
 from auth import get_password_hash
+from config import settings
+
 
 def create_admin(username: str, password: str):
     with Session(engine) as session:
@@ -28,8 +30,8 @@ def create_admin(username: str, password: str):
         print(f"[SUCCESS] Admin '{username}' created")
 
 if __name__ == "__main__":
-    username = os.getenv("ADMIN_USERNAME")
-    password = os.getenv("ADMIN_PASSWORD")
+    username = settings.ADMIN_USERNAME
+    password = settings.ADMIN_PASSWORD
 
     if not username or not password:
         raise RuntimeError(

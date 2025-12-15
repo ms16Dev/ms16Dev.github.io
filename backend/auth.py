@@ -7,6 +7,7 @@ import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
+from config import settings
 
 from database import engine
 from models import Admin
@@ -22,10 +23,10 @@ def get_session():
 # -------------------------
 # Environment-based config
 # -------------------------
-SECRET_KEY = os.getenv("JWT_SECRET")
-ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+SECRET_KEY = settings.JWT_SECRET
+ALGORITHM = settings.JWT_ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
-    os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")
+    settings.ACCESS_TOKEN_EXPIRE_MINUTES
 )
 
 if not SECRET_KEY:
