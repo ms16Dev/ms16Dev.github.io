@@ -3,8 +3,9 @@ name: Deploy Backend to Fly.io
 on:
   push:
     branches:
-      - main   # Deploy only when pushing to main
-  workflow_dispatch:  # Allow manual triggers
+      - main       # Automatic deploy on main branch push
+  workflow_dispatch: # Manual trigger from Actions tab
+
 
 jobs:
   deploy:
@@ -13,13 +14,14 @@ jobs:
       # Step 1: Checkout code
       - uses: actions/checkout@v3
 
-      # Step 2: Log in to Fly.io
-      - name: Fly.io Login
-        uses: superfly/flyctl-actions@v1
-        with:
-          api_token: ${{ secrets.FLY_API_TOKEN }}
+      # Step 2: Set Fly.io token
+      - name: Set Fly.io Token
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: echo "Fly token set"
 
-      # Step 3: Build and deploy using Fly.io
+      # Step 3: Deploy to Fly.io
       - name: Deploy to Fly.io
-        run: |
-          fly deploy --config ./backend/fly.toml --remote-only
+        run: fly deploy --config ./backend/fly.toml --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
