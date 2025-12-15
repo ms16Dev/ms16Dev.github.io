@@ -1,0 +1,25 @@
+name: Deploy Backend to Fly.io
+
+on:
+  push:
+    branches:
+      - main   # Deploy only when pushing to main
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code
+      - uses: actions/checkout@v3
+
+      # Step 2: Log in to Fly.io
+      - name: Fly.io Login
+        uses: superfly/flyctl-actions@v1
+        with:
+          api_token: ${{ secrets.FLY_API_TOKEN }}
+
+      # Step 3: Build and deploy using Fly.io
+      - name: Deploy to Fly.io
+        run: |
+          fly deploy --config ./backend/fly.toml --remote-only

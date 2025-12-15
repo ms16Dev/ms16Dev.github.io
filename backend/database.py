@@ -1,13 +1,16 @@
+import os
 from sqlmodel import SQLModel, create_engine
 
-# sqlite_file_name = "database.db"
-# sqlite_url = f"sqlite:///{sqlite_file_name}"
-# connect_args = {"check_same_thread": False}
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# MySQL Connection
-mysql_url = "mysql+pymysql://portfolio_user:port123pass@localhost:3306/portfolio"
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set")
 
-engine = create_engine(mysql_url, echo=True)
+engine = create_engine(
+    DATABASE_URL,
+    echo=False,  # set True only for debugging
+    pool_pre_ping=True,
+)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
