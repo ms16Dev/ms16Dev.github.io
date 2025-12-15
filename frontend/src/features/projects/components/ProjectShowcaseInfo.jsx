@@ -1,8 +1,7 @@
-import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import { getEventColor } from '@/utils/colors';
 import { formatDateRange } from '@/utils/dateUtils';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 
 const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
@@ -45,7 +44,7 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
                     </div>
                 )}
 
-                {/* Tags 
+                {/* Tags  */}
                 {project.tags && (
                     <div className="flex flex-wrap gap-2 w-full">
                         {project.tags.split(',').map(tag => tag.trim()).filter(Boolean).map((tag, i) => (
@@ -58,7 +57,7 @@ const ProjectShowcaseInfo = ({ project, titleRef, detailsRef }) => {
                         ))}
                     </div>
                 )}
-                    */}
+                   
 
                 {/* Buttons */}
                 <div className="flex items-center gap-4 mt-8 pt-4">
