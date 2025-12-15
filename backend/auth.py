@@ -8,8 +8,8 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
 
-from .database import engine
-from .models import Admin
+from database import engine
+from models import Admin
 
 # -------------------------
 # Database session

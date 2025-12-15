@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from ..database import engine
-from ..models import Resume, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import Resume, Admin
+from auth import get_current_admin
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/v1/resume", tags=["resume"])

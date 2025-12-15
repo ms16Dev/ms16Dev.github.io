@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from ..database import engine
-from ..models import Settings, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import Settings, Admin
+from auth import get_current_admin
 
 def get_session():
     with Session(engine) as session:

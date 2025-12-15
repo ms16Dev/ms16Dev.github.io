@@ -4,8 +4,8 @@ import logging
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from .database import create_db_and_tables
-from .routers import about, projects, calendar, resume, settings, technologies, auth
+from database import create_db_and_tables
+from routers import about, projects, calendar, resume, settings, technologies, auth
 
 # ----------------------------
 # Logging Configuration

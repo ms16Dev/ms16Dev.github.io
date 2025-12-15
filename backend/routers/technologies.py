@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Response
 from sqlmodel import Session, select
-from ..database import engine
-from ..models import Technology, TechnologyRead, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import Technology, TechnologyRead, Admin
+from auth import get_current_admin
 
 router = APIRouter(prefix="/api/v1/technologies", tags=["technologies"])
 

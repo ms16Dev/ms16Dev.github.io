@@ -5,9 +5,9 @@ Run manually per environment.
 
 import os
 from sqlmodel import Session, select
-from backend.database import engine
-from backend.models import Admin
-from backend.auth import get_password_hash
+from database import engine
+from models import Admin
+from auth import get_password_hash
 
 def create_admin(username: str, password: str):
     with Session(engine) as session:

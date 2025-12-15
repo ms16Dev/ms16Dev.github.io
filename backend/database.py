@@ -6,9 +6,16 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not set")
 
+# For Aiven MySQL with pymysql
 engine = create_engine(
     DATABASE_URL,
-    echo=False,  # set True only for debugging
+    connect_args={
+        "ssl": {
+            "ssl_ca": "/etc/ssl/certs/ca-certificates.crt",
+            "ssl_verify_cert": True
+        }
+    },
+    echo=False,
     pool_pre_ping=True,
 )
 

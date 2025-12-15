@@ -12,9 +12,9 @@ from sqlmodel import Session, select
 from datetime import date
 import json
 
-from ..database import engine
-from ..models import Project, Technology, ProjectRead, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import Project, Technology, ProjectRead, Admin
+from auth import get_current_admin
 
 router = APIRouter(prefix="/api/v1/projects", tags=["projects"])
 

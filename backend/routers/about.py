@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlmodel import Session, select
-from ..database import engine
-from ..models import About, Technology, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import About, Technology, Admin
+from auth import get_current_admin
 import base64
 import json
 

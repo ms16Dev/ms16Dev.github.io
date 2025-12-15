@@ -1,9 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from ..database import engine
-from ..models import CalendarEvent, Admin
-from ..auth import get_current_admin
+from database import engine
+from models import CalendarEvent, Admin
+from auth import get_current_admin
 from datetime import date
 
 router = APIRouter(prefix="/api/v1/calendar", tags=["calendar"])
