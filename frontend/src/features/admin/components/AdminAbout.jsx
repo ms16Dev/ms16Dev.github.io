@@ -127,7 +127,7 @@ const AdminAbout = () => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="w-full md:w-auto bg-secondary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
+                <button type="submit" className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                     Save Changes
                 </button>
             </form>
@@ -158,7 +158,7 @@ const AdminAbout = () => {
                                 onChange={e => setNewTech({ ...newTech, image: e.target.files[0] })}
                             />
                         </div>
-                        <button type="submit" className="bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
+                        <button type="submit" className="bg-secondary dark:bg-accent text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                             Add
                         </button>
                     </div>
@@ -166,7 +166,7 @@ const AdminAbout = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {technologies.map(tech => (
-                        <div key={tech.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-white/20 dark:border-slate-700 flex flex-col items-center gap-3 hover:bg-white/50 transition-colors relative group">
+                        <div key={tech.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-white/20 dark:border-slate-700 flex flex-col items-center gap-3 hover:bg-white/20 transition-colors relative group">
                             {tech.image && (
                                 <img src={`data:image/jpeg;base64,${tech.image}`} alt={tech.title} className="w-12 h-12 object-contain" />
                             )}

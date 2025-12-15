@@ -55,7 +55,7 @@ const AdminCalendar = () => {
                     </div>
                 </div>
                 <div className="flex gap-4">
-                    <button type="submit" className="flex-1 bg-secondary text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
+                    <button type="submit" className="bg-secondary dark:bg-accent text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                         {calendarData.id ? 'Update Event' : 'Create Event'}
                     </button>
                     {calendarData.id && (
@@ -70,7 +70,7 @@ const AdminCalendar = () => {
                 <h3 className="text-xl font-bold mb-6 text-secondary">Existing Events</h3>
                 <div className="grid gap-4">
                     {events.map(event => (
-                        <div key={event.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-white/20 dark:border-slate-700 flex justify-between items-center hover:bg-white/50 dark:hover:bg-slate-800/60 transition-colors">
+                        <div key={event.id} className="bg-white/40 dark:bg-slate-800/40 p-4 rounded-xl border border-accent/20 dark:border-slate-700 flex justify-between items-center hover:border-accent/50 dark:hover:bg-slate-800/60 transition-colors">
                             <div className="flex items-center gap-4">
                                 <span className="text-3xl bg-white/50 dark:bg-slate-700/50 p-2 rounded-lg">{event.icon}</span>
                                 <div>

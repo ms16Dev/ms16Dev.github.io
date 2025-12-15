@@ -53,7 +53,7 @@ const AdminSettings = () => {
                     />
                 </div>
             </div>
-            <button type="submit" className="w-full md:w-auto bg-secondary text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
+            <button type="submit" className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
                 Save Settings
             </button>
         </form>
