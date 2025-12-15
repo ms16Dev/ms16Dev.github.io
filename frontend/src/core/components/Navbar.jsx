@@ -37,7 +37,7 @@ const Navbar = () => {
     const activeText = isShowcasing ? 'text-white' : 'text-secondary';
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-8">
+        <nav className="no-print fixed top-0 left-0 w-full z-50 px-4 py-3 md:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Main Bar */}
                 <div className="bg-glass backdrop-blur-md border border-white/20 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg">
