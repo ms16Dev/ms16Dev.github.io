@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 
 const Layout = () => {
     return (
-        <div className="min-h-screen bg-primary text-white font-sans overflow-hidden relative">
+        <div className="min-h-screen text-white font-sans overflow-hidden relative">
             <Navbar />
             <main className="w-full h-full">
                 <Outlet />
