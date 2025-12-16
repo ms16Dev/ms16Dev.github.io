@@ -14,7 +14,7 @@ const Resume = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen bg-surface flex items-center justify-center">
                 Loading resume…
             </div>
         );

@@ -137,20 +137,20 @@ const Home = () => {
                 style={{ backgroundColor: theme === 'dark' ? '#0f172a' : '#fffbeb' }}
             />
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl h-auto md:h-[70vh] my-24 md:my-0">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-7xl my-24">
 
                 {/* Resume Card (Left) */}
-                <div className="home-card-wrapper w-full md:w-1/5 h-48 md:h-3/5 order-2 md:order-1">
+                <div className="home-card-wrapper w-full md:w-1/5 h-64 order-2 md:order-1">
                     <HomeResumeCard />
                 </div>
 
                 {/* About Card (Center) */}
-                <div className="home-card-wrapper w-full md:w-3/5 h-[650px] md:h-full order-1 md:order-2 flex justify-center">
+                <div className="home-card-wrapper w-full md:w-3/5 md:h-full order-1 md:order-2 flex justify-center">
                     <HomeAboutCard aboutData={aboutData} technologies={technologies} />
                 </div>
 
                 {/* Calendar Card (Right) */}
-                <div className="home-card-wrapper w-full md:w-1/5 h-48 md:h-3/5 order-3 md:order-3">
+                <div className="home-card-wrapper w-full md:w-1/5 h-64 order-3 md:order-3">
                     <HomeCalendarCard />
                 </div>
 

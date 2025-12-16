@@ -20,7 +20,7 @@ const ResumeHeader = ({ personalInfo }) => {
                     </p>
                 )}
                 {personalInfo.phone && (
-                    <p className="flex items-center gap-2">
+                    <p className="flex items-center gap-2 hidden print:flex">
                         <Phone size={16} /> {personalInfo.phone}
                     </p>
                 )}

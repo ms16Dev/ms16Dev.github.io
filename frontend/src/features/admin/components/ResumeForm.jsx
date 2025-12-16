@@ -17,8 +17,11 @@ const defaultData = {
     certifications: []
 };
 
+
 const ResumeForm = ({ resumeData, onSave }) => {
     const [formData, setFormData] = useState(defaultData);
+    const [isSubmitting, setIsSubmitting] = useState(false); 
+
 
     // Update form data when resumeData prop changes (loaded from API)
     useEffect(() => {
@@ -169,9 +172,15 @@ const ResumeForm = ({ resumeData, onSave }) => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(formData);
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        try {
+            await onSave(formData);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const inputClass = "w-full bg-surface border border-accent rounded-xl p-3 text-muted focus:outline-none focus:ring-2 focus:ring-accent transition-all backdrop-blur-sm";
@@ -573,9 +582,10 @@ const ResumeForm = ({ resumeData, onSave }) => {
             {/* Submit Button */}
             <button
                 type="submit"
-                className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all"
+                disabled={isSubmitting}
+                className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all disabled:opacity-50"
             >
-                Save Resume
+                {isSubmitting ? 'Saving…' : 'Save Resume'}
             </button>
         </form>
     );

@@ -1,12 +1,17 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Autoplay } from 'swiper/modules';
 import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
+import HomeAboutCardSkeleton from '@/core/components/ui/HomeAboutCardSkeleton'
 
 const HomeAboutCard = ({ aboutData, technologies }) => {
+     // Show skeleton while data is loading
+
+    if (!aboutData || !Array.isArray(technologies)) {
+        return <HomeAboutCardSkeleton />;
+    }
     const getSocialIcon = (platform) => {
         const icons = {
             github: Github,
