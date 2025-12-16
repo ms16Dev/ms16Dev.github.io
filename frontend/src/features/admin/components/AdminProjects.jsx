@@ -7,12 +7,12 @@ import { projectSchema } from '../schemas';
 import { getTechnologies } from '@/core/api/api';
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-
 const AdminProjects = () => {
     const { projects, fetchProjects, createProject, updateProject, deleteProject } = useProjects();
     const [editingId, setEditingId] = useState(null);
     const [technologies, setTechnologies] = useState([]);
     const [selectedTechIds, setSelectedTechIds] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false); // <--- added
 
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         resolver: zodResolver(projectSchema),
@@ -42,32 +42,36 @@ const AdminProjects = () => {
     };
 
     const onSubmit = async (data) => {
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('start_date', data.start_date || '');
-        formData.append('end_date', data.end_date || '');
-        formData.append('description', data.description || '');
-        formData.append('tags', data.tags || '');
-        formData.append('github_link', data.github_link || '');
-        formData.append('live_demo_link', data.live_demo_link || '');
+        if (isSubmitting) return; // prevent double submit
+        setIsSubmitting(true);
+        try {
+            const formData = new FormData();
+            formData.append('title', data.title);
+            formData.append('start_date', data.start_date || '');
+            formData.append('end_date', data.end_date || '');
+            formData.append('description', data.description || '');
+            formData.append('tags', data.tags || '');
+            formData.append('github_link', data.github_link || '');
+            formData.append('live_demo_link', data.live_demo_link || '');
+            if (data.background_image && data.background_image[0]) {
+                formData.append('background_image', data.background_image[0]);
+            }
+            formData.append('technology_ids', JSON.stringify(selectedTechIds));
 
-        if (data.background_image && data.background_image[0]) {
-            formData.append('background_image', data.background_image[0]);
-        }
+            let success;
+            if (editingId) {
+                success = await updateProject(editingId, formData);
+            } else {
+                success = await createProject(formData);
+            }
 
-        formData.append('technology_ids', JSON.stringify(selectedTechIds));
-
-        let success;
-        if (editingId) {
-            success = await updateProject(editingId, formData);
-        } else {
-            success = await createProject(formData);
-        }
-
-        if (success) {
-            reset();
-            setEditingId(null);
-            setSelectedTechIds([]);
+            if (success) {
+                reset();
+                setEditingId(null);
+                setSelectedTechIds([]);
+            }
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -80,10 +84,8 @@ const AdminProjects = () => {
         setValue('tags', project.tags || '');
         setValue('github_link', project.github_link || '');
         setValue('live_demo_link', project.live_demo_link || '');
-        // Clear file input as we can't set it programmatically
         setValue('background_image', null);
 
-        // Map related technologies
         if (project.technologies) {
             setSelectedTechIds(project.technologies.map(t => t.id));
         } else {
@@ -117,27 +119,30 @@ const AdminProjects = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2">
-                        <label className={labelClass}>Title</label>
+                        <label className={labelClass}>Title *</label>
                         <input type="text" className={inputClass} {...register('title')} />
                         {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
                     </div>
 
                     <div>
-                        <label className={labelClass}>Start Date</label>
+                        <label className={labelClass}>Start Date *</label>
                         <input type="date" className={inputClass} {...register('start_date')} />
+                        {errors.start_date && <p className="text-red-500 text-xs mt-1">{errors.start_date.message}</p>}
                     </div>
                     <div>
-                        <label className={labelClass}>End Date</label>
+                        <label className={labelClass}>End Date *</label>
                         <input type="date" className={inputClass} {...register('end_date')} />
+                        {errors.end_date && <p className="text-red-500 text-xs mt-1">{errors.end_date.message}</p>}
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className={labelClass}>Description</label>
+                        <label className={labelClass}>Description *</label>
                         <textarea className={`${inputClass} h-32 resize-none`} {...register('description')} />
+                        {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className={labelClass}>Technologies</label>
+                        <label className={labelClass}>Technologies *</label>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-surface p-4 rounded-xl border border-accent/20">
                             {technologies.length === 0 && <p className="text-sm text-muted col-span-4">No technologies found. Add them in Technology settings.</p>}
                             {technologies.map(tech => (
@@ -159,7 +164,7 @@ const AdminProjects = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className={labelClass}>Background Image</label>
+                        <label className={labelClass}>Background Image *</label>
                         <div className="relative">
                             <input
                                 type="file"
@@ -167,6 +172,7 @@ const AdminProjects = () => {
                                 className={`${inputClass} file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-accent/80`}
                                 {...register('background_image')}
                             />
+                            {errors.background_image && <p className="text-red-500 text-xs mt-1">{errors.background_image.message}</p>}
                             <div className="absolute right-3 top-3 pointer-events-none text-muted">
                                 <Upload size={20} />
                             </div>
@@ -198,11 +204,20 @@ const AdminProjects = () => {
                 </div>
 
                 <div className="flex gap-4 pt-6">
-                    <button type="submit" className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all">
-                        {editingId ? 'Update Project' : 'Create Project'}
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full md:w-auto bg-secondary dark:bg-accent text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all disabled:opacity-50"
+                    >
+                        {isSubmitting ? (editingId ? 'Updating…' : 'Creating…') : (editingId ? 'Update Project' : 'Create Project')}
                     </button>
                     {editingId && (
-                        <button type="button" onClick={handleCancel} className="px-6 py-3 rounded-xl font-bold text-muted hover:bg-black/5 dark:hover:bg-white/10 transition-all border border-transparent">
+                        <button
+                            type="button"
+                            onClick={handleCancel}
+                            disabled={isSubmitting}
+                            className="px-6 py-3 rounded-xl font-bold text-muted hover:bg-black/5 dark:hover:bg-white/10 transition-all border border-transparent disabled:opacity-50"
+                        >
                             Cancel
                         </button>
                     )}
@@ -237,8 +252,8 @@ const AdminProjects = () => {
                                 </div>
                             </div>
                             <div className="flex gap-3 w-full md:w-auto justify-end">
-                                <button onClick={() => handleEdit(project)} className="text-accent hover:text-accent/80 font-medium">Edit</button>
-                                <button onClick={() => deleteProject(project.id)} className="text-red-500 hover:text-red-600 font-medium">Delete</button>
+                                <button onClick={() => handleEdit(project)} className="text-accent hover:text-accent/80 font-medium" disabled={isSubmitting}>Edit</button>
+                                <button onClick={() => deleteProject(project.id)} className="text-red-500 hover:text-red-600 font-medium" disabled={isSubmitting}>Delete</button>
                             </div>
                         </div>
                     ))}
