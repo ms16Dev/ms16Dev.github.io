@@ -9,7 +9,7 @@ Vist app here [https://ms16dev.github.io](https://ms16dev.github.io)
 ### Frontend
 - **Core:** React 18, Vite
 - **Styling:** TailwindCSS v4
-- **Animations & 3D:** GSAP, Three.js (@react-three/fiber), Vanta.js
+- **Animations & 3D:** GSAP, Three.js, Vanta.js
 - **State & Logic:** React Router v7, React Hook Form, Zod (Validation), Axios
 
 ### Backend
@@ -66,7 +66,7 @@ _The API will be available at `http://127.0.0.1:9000`. API Docs at `/docs`._
 
 ### 2. Frontend Setup
 
-The frontend is a Vite-powered React app.
+The frontend is a Vite-powered React app. 
 
 ```bash
 # Navigate to frontend directory
@@ -100,12 +100,15 @@ _The application will be accessible at `http://localhost:3000`._
 
 ### Frontend (GitHub Pages)
 
-1. **Navigate to Frontend:** `cd frontend`
-2. **Build Project:** Generate the production build.
+1. **Rename your repo to your github user name**
+
+
+2. **Navigate to Frontend:** `cd frontend`
+3. **Build Project:** Generate the production build.
    ```bash
    npm run build
    ```
-3. **Move Artifacts:** Copy the contents of the `dist` folder to the repository root.
+4. **Move Artifacts:** Copy the contents of the `dist` folder to the repository root.
    ```bash
    # Windows (PowerShell)
    Copy-Item -Path dist\* -Destination ..\ -Recurse -Force
@@ -113,13 +116,13 @@ _The application will be accessible at `http://localhost:3000`._
    # macOS/Linux
    cp -r dist/* ../
    ```
-4. **Push to GitHub:** Commit and push the changes to your repository to trigger the GitHub Pages deployment.
+5. **Push to GitHub:** Commit and push the changes to your repository to trigger the GitHub Pages deployment.
 
 ## ✨ Key Features
 
 - **Dynamic Content Management:** Admin dashboard to manage Projects, Resume, About info, and Calendar events.
 - **Secure Authentication:** JWT-based login for admin access.
-- **Immersive UI:** Custom animations and links using GSAP and Three.js.
+- **Vibrant UI:** Custom animations and links using GSAP and Three.js.
 - **Responsive Design:** Fully optimized experience across desktop and mobile devices.
 
 ## 📝 License
